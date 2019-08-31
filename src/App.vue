@@ -1,14 +1,21 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <!-- <div class="p-3 mb-2 bg-primary text-white"> -->
+      <!-- <div id="nav"> -->
+        <!-- <router-link to="/">Home</router-link> | -->
+        <!-- <router-link to="/about">About</router-link> -->
+      <!-- </div> -->
+    <!-- </div> -->
     <router-view />
   </div>
 </template>
 
 <style>
+@import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
+@import "https://code.jquery.com/jquery-3.3.1.slim.min.js";
+@import "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js";
+@import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js";
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
