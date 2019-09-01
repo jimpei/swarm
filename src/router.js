@@ -16,7 +16,8 @@ let router = new Router({
     {
       path: "/activity",
       name: "activity",
-      component: () => import("./views/ActivityView.vue")
+      component: () => import("./views/ActivityView.vue"),
+      meta: { requiresAuth: true }
     },
     {
       path: "/login",
@@ -35,5 +36,18 @@ router.beforeEach((to, from, next) => {
   console.log("[router] before each start");
   console.dir("[router] from : " + from.path);
   console.dir("[router] to : " + to.path);
+
+  // 遷移先が認証必要なのか調べる
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  // 遷移先が認証必要なページの場合のみ、認証情報をチェックする
+  if (!requiresAuth) {
+    // 認証が必要なページではないので、認証チェックは行わない
+    console.log("[router] access to requiresAuth=false page. goto next().");
+    next();
+    return;
+  }
+
+  console.log("[router] access to requiresAuth=true page. goto next().");
   next();
 });
