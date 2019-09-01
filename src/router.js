@@ -4,7 +4,7 @@ import WelcomeView from "./views/WelcomeView.vue";
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -28,4 +28,12 @@ export default new Router({
         import(/* webpackChunkName: "login" */ "./views/LoginView.vue")
     }
   ]
+});
+export default router;
+
+router.beforeEach((to, from, next) => {
+  console.log("[router] before each start");
+  console.dir("[router] from : " + from.path);
+  console.dir("[router] to : " + to.path);
+  next();
 });
