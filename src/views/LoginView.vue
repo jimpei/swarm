@@ -11,20 +11,21 @@
 
       <div class="container">
 
-        <div class="card text-right">
-          <div class="card-body">
-            <h2 class="card-title text-left text-warning">Swarmにログイン</h2>
-            <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
-            <form>
-              <div class="form-group">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-              <button type="submit" class="btn btn-warning">ログイン</button>
-            </form>
-
+        <div class="mx-auto max-width-layout">
+          <div class="card text-right">
+            <div class="card-body">
+              <h4 class="card-title text-left text-warning">Swarmにログイン</h4>
+              <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
+              <form>
+                <div class="form-group">
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-warning">ログイン</button>
+              </form>
+            </div>
           </div>
         </div>
 
@@ -49,30 +50,4 @@ export default {
 };
 </script>
 
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #ffffff;
-}
-.v-margin60 {
-  margin: 60px 0;
-}
-.v-margin25 {
-  margin: 25px 0;
-}
-.logo {
-  max-width :350px;
-}
 
-
-</style>

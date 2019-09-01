@@ -70,31 +70,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #ffffff;
-}
-.v-margin60 {
-  margin: 60px 0;
-}
-.v-margin25 {
-  margin: 25px 0;
-}
-.logo {
-  max-width :350px;
-}
 
 
 </style>
