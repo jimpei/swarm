@@ -1,20 +1,21 @@
 <template>
-  <div class="hello">
-        <div class="row">
-          <div class="col-sm"></div>
-          <div class="col-sm"></div>
-          <div class="col-sm"></div>
-          <div class="col-sm"></div>
-          <div class="col-sm"><button type="button" class="btn btn-outline-light">Login</button></div>
-        </div>
-        <div class="container">
+  <div class="welcome">
+    <nav class="navbar navbar-light bg-warning">
+      <a class="navbar-brand"></a>
+      <form class="form-inline">
+        <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><router-link to="/login">Login</router-link></button>
+      </form>
+    </nav>
+    <div class="p-3 mb-2 bg-warning text-white">
 
-        <div cslass="v-margin62"></div>
-        <img alt="Vue logo" src="../assets/swarm_logo.png" height="112"/>
+      <div class="v-margin25"></div>
+
+      <div class="container">
+
+        <div cslass="v-margin60"></div>
+        <img alt="Vue logo" class="logo" src="../assets/swarm_logo.png" width="80%"/>
         <div class="v-margin25"></div>
         <div class="row">
-          <!-- <div class="col"><button type="button" class="btn btn-dark">Primary</button></div> -->
-          <!-- <div class="col"><button type="button" class="btn btn-dark">Primary</button></div> -->
           <div class="w-100">
             <div class="col"><button type="button" class="btn btn-dark">Primary</button></div>
           </div>
@@ -22,31 +23,7 @@
         <div class="v-margin25"></div>
         <h2>{{ msg }}</h2>
         <div class="v-margin25"></div>
-        <img alt="Vue logo" src="../assets/swarm_phone.png" height="735"/>
-
-        <ul>
-          <li>
-            <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-          </li>
-          <li>
-            <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-              >Forum</a
-            >
-          </li>
-          <li>
-            <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-              >Community Chat</a
-            >
-          </li>
-          <li>
-            <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-              >Twitter</a
-            >
-          </li>
-          <li>
-            <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-          </li>
-        </ul>
+        <img alt="Vue logo" class="logo" src="../assets/swarm_phone.png" width="80%"/>
         <h3>Ecosystem</h3>
         <ul>
           <li>
@@ -80,15 +57,13 @@
           </li>
         </ul>
       </div>
-
-
-
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "welcome",
   props: {
     msg: String
   }
@@ -109,12 +84,17 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: #ffffff;
 }
-.v-margin62 {
-   margin: 62px 0;
+.v-margin60 {
+  margin: 60px 0;
 }
 .v-margin25 {
-   margin: 25px 0;
+  margin: 25px 0;
 }
+.logo {
+  max-width :350px;
+}
+
+
 </style>
