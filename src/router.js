@@ -14,6 +14,11 @@ export default new Router({
       component: WelcomeView
     },
     {
+      path: "/activity",
+      name: "activity",
+      component: () => import("./views/ActivityView.vue")
+    },
+    {
       path: "/login",
       name: "login",
       // route level code-splitting
