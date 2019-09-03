@@ -29,6 +29,8 @@
           </div>
         </div>
 
+        <router-link to="/activity"><button type="submit" class="btn btn-warning">aaaa</button></router-link>
+
       </div>
 
       <div class="v-margin25"></div>
