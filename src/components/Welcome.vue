@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light bg-warning">
       <a class="navbar-brand"></a>
       <form class="form-inline">
-        <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><router-link to="/login">Login</router-link></button>
+        <router-link to="/login"><button class="btn btn-outline-light my-2 my-sm-0" >Login</button></router-link>
       </form>
     </nav>
     <div class="p-3 mb-2 bg-warning text-white">
