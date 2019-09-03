@@ -47,9 +47,9 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
+/* a {
   color: #ffffff;
-}
+} */
 .v-margin60 {
   margin: 60px 0;
 }

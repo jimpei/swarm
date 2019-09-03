@@ -21,6 +21,11 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: "/signup",
+      name: "signup",
+      component: () => import("./views/SignUpView.vue")
+    },
+    {
       path: "/login",
       name: "login",
       // route level code-splitting

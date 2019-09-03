@@ -17,15 +17,13 @@
             <div class="card-body">
               <h4 class="card-title text-left text-warning">Swarmにログイン</h4>
               <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
-              <form>
-                <div class="form-group">
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-warning">ログイン</button>
-              </form>
+              <div class="form-group">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <button class="btn btn-warning">ログイン</button>
             </div>
           </div>
         </div>
