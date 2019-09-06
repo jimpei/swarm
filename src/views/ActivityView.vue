@@ -43,7 +43,7 @@ export default {
     Footer
   },
   methods: {
-    logout: function () {
+    logout () {
       firebase.auth().signOut().then(() => {
         this.$router.push('/')
       })

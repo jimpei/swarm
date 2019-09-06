@@ -56,7 +56,7 @@ export default {
     }
   },
   methods: {
-    mailSignIn: function () {
+    mailSignIn () {
       console.log('[signIn] try mail sigin.');
       firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(
         user => {

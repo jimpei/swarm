@@ -55,7 +55,7 @@ export default {
     }
   },
   methods: {
-    signUp: function () {
+    signUp () {
       console.log('debug push signup button');
       firebase.auth().createUserWithEmailAndPassword(this.username, this.password)
         .then(user => {
