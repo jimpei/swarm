@@ -13,7 +13,7 @@
 
         <div class="mx-auto max-width-layout">
           <div class="card text-left">
-            <div class="card-header bg-warning">Header</div>
+            <div class="card-header bg-warning">welcome {{ username }}</div>
             <div class="card-body">
               <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
               <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
@@ -41,6 +41,11 @@ export default {
   name: "login",
   components: {
     Footer
+  },
+  data () {
+    return {
+      username: firebase.auth().currentUser.email
+    }
   },
   methods: {
     logout () {
