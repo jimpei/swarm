@@ -65,7 +65,7 @@ export default {
           // alert('mailSignIn Success! redirect to top page.');
           console.log('[signIn] mailSignIn Success! redirect to top page.');
           // TODO:ログインを待ってからpushすること
-          // this.$router.push('/');
+          this.$router.push('/activity');
         },
         err => {
           alert(err.message);

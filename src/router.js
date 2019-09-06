@@ -33,6 +33,7 @@ let router = new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "login" */ "./views/LoginView.vue")
+      // meta: { requiresAuth: true }
     }
   ]
 });
@@ -59,15 +60,19 @@ router.beforeEach((to, from, next) => {
     .getRedirectResult()
     .then(result => {
       if (result.credential) {
-        var token = result.credential.accessToken;
+        let token = result.credential.accessToken;
+        let user = result.user;
         console.log("[router] get redirect result token:" + token);
-        var user = result.user;
         console.log(
-          "[router] get redirect result:" + user.email + " goto next()"
+          "[router] get redirect result:" +
+            user.email +
+            " goto next => " +
+            to.path
         );
         next();
       } else {
-        console.log("[router] none redirect result.");
+        // ログイン済みだった場合
+        console.log("[router] already login.");
       }
     })
     .catch(function(error) {
@@ -82,7 +87,10 @@ router.beforeEach((to, from, next) => {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       console.log(
-        "[router] sigin in check ok : " + user.email + " goto next()."
+        "[router] sigin in check ok : " +
+          user.email +
+          " goto next(). " +
+          to.path
       );
       console.log(user.photoURL);
       next();

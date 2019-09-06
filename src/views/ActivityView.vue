@@ -15,15 +15,10 @@
           <div class="card text-left">
             <div class="card-header bg-warning">Header</div>
             <div class="card-body">
-              <h4 class="card-title text-left text-warning">Swarmにログイン</h4>
+              <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
               <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
-              <div class="form-group">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-              <button class="btn btn-warning">ログイン</button>
+
+              <button @click="logout" class="btn btn-warning">ログアウト</button>
             </div>
           </div>
         </div>
@@ -40,11 +35,19 @@
 <script>
 // @ is an alias to /src
 import Footer from "@/components/Footer.vue";
+import firebase from "firebase";
 
 export default {
   name: "login",
   components: {
     Footer
+  },
+  methods: {
+    logout: function () {
+      firebase.auth().signOut().then(() => {
+        this.$router.push('/')
+      })
+    }
   }
 };
 </script>

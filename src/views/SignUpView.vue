@@ -61,7 +61,7 @@ export default {
         .then(user => {
           alert('Create account: ', user.email)
           //TODO:crete を待ってからpushすること
-          // this.$router.push('/login');
+          this.$router.push('/login');
         })
         .catch(error => {
           alert(error.message)
