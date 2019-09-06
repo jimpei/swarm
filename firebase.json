@@ -17,7 +17,16 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "redirects": [ {
+      "source" : "?*",
+      "destination" : "/",
+      "type" : 301
+    }, {
+      "source" : "/firebase/*",
+      "destination" : "https://firebase.google.com",
+      "type" : 302
+    } ]
   },
   "storage": {
     "rules": "storage.rules"
