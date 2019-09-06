@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="common-footer">
     <div class="card-body p-3 mb-2 bg-light text-darks">
       <blockquote class="blockquote mb-0">
         <p>Footer aaa.</p>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "footer",
+  name: "common-footer",
   props: {
     msg: String
   }

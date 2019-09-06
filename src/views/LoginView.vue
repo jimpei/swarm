@@ -15,22 +15,20 @@
           <div class="card text-right">
             <div class="card-body">
               <h4 class="card-title text-left text-warning">Swarmにログイン</h4>
-              <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
                 <div class="form-group">
                   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="username">
                 </div>
                 <div class="form-group">
                   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
                 </div>
-
                 <button @click="mailSignIn" class="btn btn-warning">ログイン</button>
                 <p class="card-text"><small class="text-muted">新規登録は<router-link to="/signup">こちら</router-link></small></p>
-
             </div>
           </div>
         </div>
 
-        <router-link to="/activity"><button type="submit" class="btn btn-warning">aaaa</button></router-link>
+        <div class="v-margin25"></div>
+        <router-link to="/activity"><button type="submit" class="btn btn-warning">[debug] goto activity</button></router-link>
 
       </div>
 
@@ -64,7 +62,6 @@ export default {
         user => {
           // alert('mailSignIn Success! redirect to top page.');
           console.log('[signIn] mailSignIn Success! redirect to top page.');
-          // TODO:ログインを待ってからpushすること
           this.$router.push('/activity');
         },
         err => {
@@ -73,6 +70,7 @@ export default {
         }
       )
     }
+
   }
 };
 </script>
