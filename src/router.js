@@ -50,60 +50,65 @@ router.beforeEach((to, from, next) => {
   // 遷移先が認証必要なページの場合のみ、認証情報をチェックする
   if (!requiresAuth) {
     // 認証が必要なページではないので、認証チェックは行わない
-    console.log("[router] access to requiresAuth=false page. goto next().");
+    console.log(
+      "[router] access to requiresAuth=false page. goto next =>" + to.path
+    );
     next();
     return;
   }
 
-  firebase
-    .auth()
-    .getRedirectResult()
-    .then(result => {
-      if (result.credential) {
-        let token = result.credential.accessToken;
-        let user = result.user;
-        console.log("[router] get redirect result token:" + token);
-        console.log(
-          "[router] get redirect result:" +
-            user.email +
-            " goto next => " +
-            to.path
-        );
-        next();
-      } else {
-        // ログイン済みだった場合
-        console.log("[router] already login.");
-      }
-    })
-    .catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      console.log("[router] get redirect result error");
-    });
+  // ここはなくてもいけそうな気がした
+  // firebase
+  //   .auth()
+  //   .getRedirectResult()
+  //   .then(result => {
+  //     if (result.credential) {
+  //       let token = result.credential.accessToken;
+  //       let user = result.user;
+  //       console.log("[router] get redirect result token:" + token);
+  //       console.log(
+  //         "[router] get redirect result:" +
+  //           user.email +
+  //           " goto next => " +
+  //           to.path
+  //       );
+  //       next();
+  //     } else {
+  //       // ログイン済みだった場合
+  //       console.log("[router] already login.");
+  //     }
+  //   })
+  //   .catch(function(error) {
+  //     var errorCode = error.code;
+  //     var errorMessage = error.message;
+  //     var email = error.email;
+  //     // The firebase.auth.AuthCredential type that was used.
+  //     var credential = error.credential;
+  //     console.log("[router] get redirect result error");
+  //   });
 
+  // ユーザ情報取得
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       console.log(
-        "[router] sigin in check ok : " +
-          user.email +
-          " goto next(). " +
-          to.path
+        "[router] sigin in check ok : " + user.email + " goto next =>" + to.path
       );
       console.log(user.photoURL);
       next();
       return;
     } else {
+      // ユーザ情報が取得できなかった場合は、ログインページにリダイレクトさせる
       console.log("[router] sigin in check ng. redirect to login.");
       next({
         path: "/login",
         query: { redirect: to.fullPath }
       });
+      return;
     }
   });
 
-  console.log("[router] access to requiresAuth=true page. goto next().");
+  console.log(
+    "[router] access to requiresAuth=true page. goto next =>" + to.path
+  );
   next();
 });
