@@ -28,7 +28,7 @@
 or
           <div class="card text-right">
             <div class="card-body">
-              <img @click="googleSignIn" alt="Vue logo" class="logo" src="../assets/btn_google_signin_light_normal_web@2x.png" width="45%"/>
+              <img @click="googleSignIn" class="max250" src="../assets/btn_google_signin_light_normal_web@2x.png" width="200"/>
             </div>
           </div>
 

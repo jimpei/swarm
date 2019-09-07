@@ -59,6 +59,9 @@ li {
 .logo {
   max-width :350px;
 }
+.max250 {
+  max-width :250px;
+}
 .max-width-layout {
   max-width :500px;
 }
