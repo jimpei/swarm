@@ -28,6 +28,7 @@
 or
           <div class="card text-right">
             <div class="card-body">
+              <!-- TODO:googleログイン後はリダイレクトされないので、activityボタンを押す必要がある -->
               <img @click="googleSignIn" class="max250" src="../assets/btn_google_signin_light_normal_web@2x.png" width="200"/>
             </div>
           </div>
