@@ -9,7 +9,8 @@
 
         <div class="mx-auto max-width-layout">
           <div class="card text-left">
-            <div class="card-header bg-warning">welcome {{ username }}</div>
+            <div class="card-header bg-warning">welcome {{ user.uid }} </div>
+            <div class="card-header bg-warning">welcome {{ user.email }} </div>
             <div class="card-body">
               <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
               <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
@@ -33,6 +34,7 @@
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 import firebase from "firebase";
+import store from "../store";
 
 export default {
   name: "login",
@@ -43,6 +45,11 @@ export default {
   data () {
     return {
       username: firebase.auth().currentUser.email
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
     }
   },
   methods: {

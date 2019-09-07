@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import WelcomeView from "./views/WelcomeView.vue";
 import firebase from "firebase";
+import store from "./store";
 
 Vue.use(Router);
 
@@ -94,6 +95,9 @@ router.beforeEach((to, from, next) => {
         "[router] sigin in check ok : " + user.email + " goto next =>" + to.path
       );
       console.log(user.photoURL);
+      user = user ? user : {};
+      store.commit("onAuthStateChanged", user);
+      store.commit("onUserStatusChanged", user.uid ? true : false);
       next();
       return;
     } else {
