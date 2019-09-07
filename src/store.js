@@ -10,9 +10,12 @@ export default new Vuex.Store({
   },
   mutations: {
     onAuthStateChanged(state, user) {
+      console.log("[store.js] mutation onAuthStateChanged");
       state.user = user; //firebaseが返したユーザー情報
+      state.userIcon = user.photoURL;
     },
     onUserStatusChanged(state, status) {
+      console.log("[store.js] mutation onUserStatusChanged");
       state.status = status; //ログインしてるかどうか true or false
     }
   },

@@ -16,19 +16,21 @@ export default {
   init() {
     firebase.initializeApp(firebaseConfig);
     // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-  }
+  },
   // login() {
   //   const provider = new firebase.auth.GoogleAuthProvider();
   //   firebase.auth().signInWithPopup(provider);
   // },
-  // logout() {
-  //   firebase.auth().signOut();
-  // },
-  // onAuth() {
-  //   firebase.auth().onAuthStateChanged(user => {
-  //     user = user ? user : {};
-  //     store.commit("onAuthStateChanged", user);
-  //     store.commit("onUserStatusChanged", user.uid ? true : false);
-  //   });
-  // }
+  logout() {
+    firebase.auth().signOut();
+  },
+  onAuth() {
+    console.log("[firebase.js] onAuth().");
+    firebase.auth().onAuthStateChanged(user => {
+      user = user ? user : {};
+      console.log("[firebase.js] store commit.");
+      store.commit("onAuthStateChanged", user);
+      store.commit("onUserStatusChanged", user.uid ? true : false);
+    });
+  }
 };

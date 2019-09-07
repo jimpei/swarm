@@ -25,6 +25,14 @@
                 <p class="card-text"><small class="text-muted">新規登録は<router-link to="/signup">こちら</router-link></small></p>
             </div>
           </div>
+or
+          <div class="card text-right">
+            <div class="card-body">
+              <img @click="googleSignIn" alt="Vue logo" class="logo" src="../assets/btn_google_signin_light_normal_web@2x.png" width="45%"/>
+            </div>
+          </div>
+
+
         </div>
 
         <div class="v-margin25"></div>
@@ -43,6 +51,9 @@
 // @ is an alias to /src
 import Footer from "@/components/Footer.vue";
 import firebase from "firebase";
+import store from "../store";
+import Firebase from "../firebase";
+
 
 export default {
   name: "login",
@@ -69,6 +80,22 @@ export default {
           console.log('[signIn] mailSignIn error!');
         }
       )
+    },
+    googleSignIn () {
+      console.log('[signIn] try google sigin.');
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider).then(function(result) {
+        console.log('debug google signin success')
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
     }
 
   }

@@ -94,7 +94,7 @@ router.beforeEach((to, from, next) => {
       console.log(
         "[router] sigin in check ok : " + user.email + " goto next =>" + to.path
       );
-      console.log(user.photoURL);
+      console.log("[router] store commit.");
       user = user ? user : {};
       store.commit("onAuthStateChanged", user);
       store.commit("onUserStatusChanged", user.uid ? true : false);

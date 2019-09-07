@@ -11,11 +11,14 @@
           <div class="card text-left">
             <div class="card-header bg-warning">welcome {{ user.uid }} </div>
             <div class="card-header bg-warning">welcome {{ user.email }} </div>
+            <div v-if="user.photoURL"><img :src="user.photoURL" width="40px"></div>
+            <div v-else><img src="../assets/fantasy_game_character_slime.png" width="40px"></div>
+
             <div class="card-body">
               <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
               <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
 
-              <button @click="logout" class="btn btn-warning">ログアウト</button>
+              <button @click="doLogout" class="btn btn-warning">ログアウト</button>
             </div>
           </div>
         </div>
@@ -35,6 +38,7 @@ import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 import firebase from "firebase";
 import store from "../store";
+import Firebase from "../firebase";
 
 export default {
   name: "login",
@@ -44,7 +48,7 @@ export default {
   },
   data () {
     return {
-      username: firebase.auth().currentUser.email
+      // username: firebase.auth().currentUser.email
     }
   },
   computed: {
@@ -53,10 +57,8 @@ export default {
     }
   },
   methods: {
-    logout () {
-      firebase.auth().signOut().then(() => {
-        this.$router.push('/')
-      })
+    doLogout () {
+      Firebase.logout();
     }
   }
 };
