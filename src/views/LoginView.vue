@@ -1,10 +1,6 @@
 <template>
   <div class="login">
-    <nav class="navbar navbar-light bg-warning">
-      <div class="mx-auto" style="width: 200px;">
-        <router-link to="/"><img alt="Vue logo" class="logo" src="../assets/swarm_logo.png" width="50%"/></router-link>
-      </div>
-    </nav>
+    <Header msg="Welcome to Your Vue.js App" />
 
     <div class="p-3 mb-2 bg-light text-dark">
       <div class="v-margin25"></div>
@@ -69,6 +65,7 @@ or
 <script>
 // @ is an alias to /src
 import Footer from "@/components/Footer.vue";
+import Header from "@/components/Header.vue";
 import firebase from "firebase";
 import store from "../store";
 import Firebase from "../firebase";
@@ -77,7 +74,8 @@ import Firebase from "../firebase";
 export default {
   name: "login",
   components: {
-    Footer
+    Footer,
+    Header
   },
   data () {
     return {
