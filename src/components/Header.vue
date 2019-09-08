@@ -13,10 +13,9 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <router-link class="dropdown-item" to="/activity">Activity</router-link>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" @click="doLogout">ログアウト</a>
           </div>
         </div>
       </div>
@@ -26,6 +25,7 @@
 
 <script>
 import store from "../store";
+import Firebase from "../firebase";
 
 export default {
   name: "common-header",
@@ -42,5 +42,10 @@ export default {
       return this.$store.getters.user;
     }
   },
+  methods: {
+    doLogout () {
+      Firebase.logout();
+    }
+  }
 };
 </script>
