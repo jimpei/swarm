@@ -1,6 +1,6 @@
 import firebase from "@firebase/app";
 import "@firebase/auth";
-// import store from "./store";
+import store from "./store";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAv6tanUdTFNFevBBrlDLcgpUz9tD23Cg4",
@@ -23,6 +23,8 @@ export default {
   // },
   logout() {
     firebase.auth().signOut();
+    store.commit("onAuthStateChanged", {});
+    store.commit("onUserStatusChanged", false);
   },
   onAuth() {
     console.log("[firebase.js] onAuth().");
