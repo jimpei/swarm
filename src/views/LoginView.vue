@@ -41,15 +41,7 @@ or
             </div>
           </div>
 
-          <div class="v-margin25"></div>
-          <div class="card">
-            <div class="card-body">
-              <h6>TODO:googleログイン後はリダイレクトされないので、activityボタンを押す必要がある</h6><br>
-            </div>
-          </div>
-
         </div>
-
         <div class="v-margin25"></div>
         <router-link to="/activity"><button type="submit" class="btn btn-warning">[debug] goto activity</button></router-link>
 
