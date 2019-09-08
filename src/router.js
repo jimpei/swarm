@@ -45,6 +45,15 @@ router.beforeEach((to, from, next) => {
   console.dir("[router] from : " + from.path);
   console.dir("[router] to : " + to.path);
 
+  if (to.path == "/login") {
+    // console.log(store.getters.user.email);
+    if (store.getters.user.email) {
+      console.log("[router] already login");
+      next("/activity");
+      return;
+    }
+  }
+
   // 遷移先が認証必要なのか調べる
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
@@ -57,36 +66,6 @@ router.beforeEach((to, from, next) => {
     next();
     return;
   }
-
-  // ここはなくてもいけそうな気がした
-  // firebase
-  //   .auth()
-  //   .getRedirectResult()
-  //   .then(result => {
-  //     if (result.credential) {
-  //       let token = result.credential.accessToken;
-  //       let user = result.user;
-  //       console.log("[router] get redirect result token:" + token);
-  //       console.log(
-  //         "[router] get redirect result:" +
-  //           user.email +
-  //           " goto next => " +
-  //           to.path
-  //       );
-  //       next();
-  //     } else {
-  //       // ログイン済みだった場合
-  //       console.log("[router] already login.");
-  //     }
-  //   })
-  //   .catch(function(error) {
-  //     var errorCode = error.code;
-  //     var errorMessage = error.message;
-  //     var email = error.email;
-  //     // The firebase.auth.AuthCredential type that was used.
-  //     var credential = error.credential;
-  //     console.log("[router] get redirect result error");
-  //   });
 
   // ユーザ情報取得
   firebase.auth().onAuthStateChanged(function(user) {

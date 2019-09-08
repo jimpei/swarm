@@ -103,16 +103,17 @@ export default {
       )
     },
     googleSignIn () {
-      // this.show = true;
+      this.show = true;
       console.log('[signIn] try google sigin.');
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider).then(function(result) {
+      firebase.auth().signInWithPopup(provider).then(result => {
         console.log('debug google signin success')
-        // this.show = false;
-      }).catch(function(error) {
+        this.show = false;
+        this.$router.push('/activity');
+        return;
+      }).catch(error => {
         console.log('debug google signin error')
-        // this.show = false;
-        // Handle Errors here.
+        this.show = false;
         var errorCode = error.code;
         var errorMessage = error.message;
         // The email of the user's account used.
