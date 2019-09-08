@@ -23,7 +23,14 @@
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
               </div>
 
-              <button @click="signUp" class="btn btn-warning">新規登録</button>
+              <button @click="signUp" class="btn btn-warning">
+                <div class="text-center">
+                  <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  新規登録
+                </div>
+              </button>
             </div>
           </div>
         </div>
@@ -52,19 +59,23 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      show: false
     }
   },
   methods: {
     signUp () {
+      this.show = true;
       console.log('debug push signup button');
       firebase.auth().createUserWithEmailAndPassword(this.username, this.password)
         .then(user => {
-          alert('Create account: ', user.email)
+          alert('Create account: ', user.email);
+          this.show = false;
           this.$router.push('/login');
         })
         .catch(error => {
           alert(error.message)
+          this.show = false;
         })
     }
   }

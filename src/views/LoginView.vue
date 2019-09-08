@@ -21,18 +21,36 @@
                 <div class="form-group">
                   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
                 </div>
-                <button @click="mailSignIn" class="btn btn-warning">ログイン</button>
+                <button @click="mailSignIn" class="btn btn-warning">
+                  <div class="text-center">
+                    <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  ログイン
+                  </div>
+                </button>
+
                 <p class="card-text"><small class="text-muted">新規登録は<router-link to="/signup">こちら</router-link></small></p>
             </div>
           </div>
 or
           <div class="card text-right">
             <div class="card-body">
-              <!-- TODO:googleログイン後はリダイレクトされないので、activityボタンを押す必要がある -->
+              <div class="text-center">
+                <div v-if="show" class="spinner-border spinner-border-sm text-warning" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
               <img @click="googleSignIn" class="max250" src="../assets/btn_google_signin_light_normal_web@2x.png" width="200"/>
             </div>
           </div>
 
+          <div class="v-margin25"></div>
+          <div class="card">
+            <div class="card-body">
+              <h6>TODO:googleログイン後はリダイレクトされないので、activityボタンを押す必要がある</h6><br>
+            </div>
+          </div>
 
         </div>
 
@@ -64,30 +82,38 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      show: false
     }
   },
   methods: {
     mailSignIn () {
+      this.show = true;
       console.log('[signIn] try mail sigin.');
       firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(
         user => {
           // alert('mailSignIn Success! redirect to top page.');
+          this.show = false;
           console.log('[signIn] mailSignIn Success! redirect to top page.');
           this.$router.push('/activity');
         },
         err => {
           alert(err.message);
+          this.show = false;
           console.log('[signIn] mailSignIn error!');
         }
       )
     },
     googleSignIn () {
+      // this.show = true;
       console.log('[signIn] try google sigin.');
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
         console.log('debug google signin success')
+        // this.show = false;
       }).catch(function(error) {
+        console.log('debug google signin error')
+        // this.show = false;
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -101,6 +127,7 @@ export default {
 
   }
 };
+
 </script>
 
 
