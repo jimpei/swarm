@@ -24,7 +24,7 @@
               </div>
 
               <div class="v-margin25"></div>
-              <button @click="doLogout" class="btn btn-warning">ログアウト</button>
+              <button @click="dbRefer" class="btn btn-warning">db refer</button>
             </div>
           </div>
 
@@ -42,7 +42,7 @@
 // @ is an alias to /src
 // import firebase from "firebase";
 import store from "../store";
-import Firebase from "../firebase";
+import {db} from "../firebase";
 
 export default {
   name: "chat",
@@ -60,7 +60,24 @@ export default {
   },
   methods: {
     doLogout () {
-      Firebase.logout();
+      common.logout();
+    },
+    dbRefer () {
+      let dbRef = db.collection('testCollection');
+      let allData = dbRef.get()
+        .then(snapshot => {
+          let array = [];
+          snapshot.forEach(doc => {
+            // console.log(doc.id, "=>", doc.data());
+            let tmpArray = JSON.parse(JSON.stringify(doc.data()));
+            array.push(tmpArray);
+          });
+          console.dir(array);
+          // return array;
+        })
+        .catch(err => {
+          console.log("Error getting documents", err);
+        });
     }
   }
 };
