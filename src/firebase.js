@@ -1,6 +1,5 @@
 import firebase from "@firebase/app";
-import "@firebase/auth";
-import store from "./store";
+import "@firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAv6tanUdTFNFevBBrlDLcgpUz9tD23Cg4",
@@ -12,27 +11,5 @@ const firebaseConfig = {
   appId: "1:196507500794:web:495a22fce344b6c1"
 };
 
-export default {
-  init() {
-    firebase.initializeApp(firebaseConfig);
-    // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-  },
-  // login() {
-  //   const provider = new firebase.auth.GoogleAuthProvider();
-  //   firebase.auth().signInWithPopup(provider);
-  // },
-  logout() {
-    firebase.auth().signOut();
-    store.commit("onAuthStateChanged", {});
-    store.commit("onUserStatusChanged", false);
-  },
-  onAuth() {
-    console.log("[firebase.js] onAuth().");
-    firebase.auth().onAuthStateChanged(user => {
-      user = user ? user : {};
-      console.log("[firebase.js] store commit.");
-      store.commit("onAuthStateChanged", user);
-      store.commit("onUserStatusChanged", user.uid ? true : false);
-    });
-  }
-};
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const db = firebaseApp.firestore();

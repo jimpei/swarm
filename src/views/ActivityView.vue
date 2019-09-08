@@ -46,7 +46,7 @@ import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 // import firebase from "firebase";
 import store from "../store";
-import Firebase from "../firebase";
+import common from "../common";
 
 export default {
   name: "login",
@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     doLogout () {
-      Firebase.logout();
+      common.logout();
     }
   }
 };

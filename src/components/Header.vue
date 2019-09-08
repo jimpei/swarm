@@ -26,7 +26,7 @@
 
 <script>
 import store from "../store";
-import Firebase from "../firebase";
+import common from "../common";
 
 export default {
   name: "common-header",
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     doLogout () {
-      Firebase.logout();
+      common.logout();
     }
   }
 };

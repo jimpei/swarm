@@ -61,7 +61,7 @@ import Header from "@/components/Header.vue";
 import firebase from "@firebase/app";
 import "@firebase/auth";
 import store from "../store";
-import Firebase from "../firebase";
+// import common from "../common";
 
 
 export default {
