@@ -40,7 +40,7 @@
 
 <script>
 // @ is an alias to /src
-import firebase from "firebase";
+// import firebase from "firebase";
 import store from "../store";
 import Firebase from "../firebase";
 

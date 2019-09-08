@@ -44,7 +44,7 @@
 // @ is an alias to /src
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
-import firebase from "firebase";
+// import firebase from "firebase";
 import store from "../store";
 import Firebase from "../firebase";
 
