@@ -34,16 +34,6 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="exampleFormControlSelect2">Example multiple select</label>
-                  <select multiple class="form-control" id="exampleFormControlSelect2" v-model="field2">
-                    <option>D</option>
-                    <option>E</option>
-                    <option>F</option>
-                    <option>G</option>
-                    <option>H</option>
-                  </select>
-                </div>
-                <div class="form-group">
                   <label for="exampleFormControlTextarea1">Example textarea</label>
                   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="text"></textarea>
                 </div>
@@ -89,7 +79,6 @@ export default {
     return {
       username: '',
       field1: 'A',
-      field2: ['D'],
       text: '',
       createAt: null,
       show: false
@@ -105,7 +94,7 @@ export default {
       common.logout();
     },
     dbRefer () {
-      let dbRef = db.collection('testCollection');
+      let dbRef = db.collection('message');
       let allData = dbRef.get()
         .then(snapshot => {
           let array = [];
@@ -126,7 +115,6 @@ export default {
       db.collection('message').add({
         username: this.user.email,
         field1: this.field1,
-        field2: this.field2[0],
         text: this.text,
         createdAt: new Date()
       }).then(result => {
