@@ -22,11 +22,45 @@
                   user display name => {{ user.displayName }}
                 </div>
               </div>
+              <div class="v-margin25"></div>
+              <form>
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">Example select</label>
+                  <select class="form-control" id="exampleFormControlSelect1" v-model="field1">
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlSelect2">Example multiple select</label>
+                  <select multiple class="form-control" id="exampleFormControlSelect2" v-model="field2">
+                    <option>D</option>
+                    <option>E</option>
+                    <option>F</option>
+                    <option>G</option>
+                    <option>H</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Example textarea</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="text"></textarea>
+                </div>
+                <div class="v-margin25"></div>
+                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+              </form>
+                <button @click="dbAdd" class="btn btn-warning">
+                  <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  db add
+                </button>
 
               <div class="v-margin25"></div>
               <button @click="dbRefer" class="btn btn-warning">db refer</button>
               <div class="v-margin25"></div>
-              <button @click="dbAdd" class="btn btn-warning">db add</button>
+              <button @click="debug" class="btn btn-info">debug</button>
+
             </div>
           </div>
 
@@ -52,7 +86,12 @@ export default {
   },
   data () {
     return {
-      // username: firebase.auth().currentUser.email
+      username: '',
+      field1: 'A',
+      field2: ['D'],
+      text: '',
+      createAt: null,
+      show: false
     }
   },
   computed: {
@@ -82,9 +121,25 @@ export default {
         });
     },
     dbAdd () {
-      db.collection('testCollection').add({
-        test: 'aaa'
-      })
+      this.show = true;
+      db.collection('message').add({
+        username: this.user.email,
+        field1: this.field1,
+        field2: this.field2[0],
+        text: this.text,
+        createdAt: new Date()
+      }).then(result => {
+        console.log('db insert success');
+        this.show = false;
+      }).catch(error => {
+        console.log('db insert error')
+        this.show = false;
+      });
+    },
+    debug () {
+      console.log('debug start');
+      console.log(this.user.email);
+      console.log('debug end');
     }
   }
 };
