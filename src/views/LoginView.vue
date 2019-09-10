@@ -43,7 +43,7 @@ or
 
         </div>
         <div class="v-margin25"></div>
-        <router-link to="/activity"><button type="submit" class="btn btn-warning">[debug] goto activity</button></router-link>
+        <router-link to="/activity"><button type="submit" class="btn btn-info">[debug] goto activity</button></router-link>
 
       </div>
 

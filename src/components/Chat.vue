@@ -51,6 +51,22 @@
               <button @click="dbRefer" class="btn btn-warning">db refer</button>
               <div class="v-margin25"></div>
               <button @click="debug" class="btn btn-info">debug</button>
+              <div class="v-margin25"></div>
+
+              <div v-for="(comment, key, index) in comments" :key="index">
+                <div class="card">
+                  <div class="card-header">
+                    <img class="mr-3" src="https://picsum.photos/200" width="40px">
+                    {{ comment.username }} {{ comment.createdAt }}
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ comment.field1 }}</h5>
+                    <p class="card-text">{{ comment.text }}</p>
+                    <a href="#" class="btn btn-info">Go somewhere</a>
+                  </div>
+                </div>
+                <div class="v-margin25"></div>
+              </div>
 
             </div>
           </div>
@@ -80,10 +96,16 @@ export default {
       username: '',
       field1: 'A',
       text: '',
-      createAt: null,
+      createdAt: null,
+      comments: [],
       show: false
     }
   },
+  // firestore() {
+  //   return {
+  //     comments: db.collection('message')
+  //   }
+  // },
   computed: {
     user() {
       return this.$store.getters.user;
@@ -94,16 +116,17 @@ export default {
       common.logout();
     },
     dbRefer () {
-      let dbRef = db.collection('message');
+      let dbRef = db.collection('message').orderBy('createdAt');
       let allData = dbRef.get()
         .then(snapshot => {
           let array = [];
           snapshot.forEach(doc => {
-            // console.log(doc.id, "=>", doc.data());
+            console.log(doc.id, "=>", doc.data());
             let tmpArray = JSON.parse(JSON.stringify(doc.data()));
             array.push(tmpArray);
           });
           console.dir(array);
+          this.comments = array;
           // return array;
         })
         .catch(err => {
@@ -128,6 +151,7 @@ export default {
     debug () {
       console.log('debug start');
       console.log(this.user.email);
+      console.log(new Date(1568103213*1000));
       console.log('debug end');
     }
   }
