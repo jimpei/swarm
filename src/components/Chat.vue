@@ -12,7 +12,6 @@
 
             <div class="card-body">
               <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
-              <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
 
               <div class="media">
                 <div v-if="user.photoURL"><img class="mr-3" :src="user.photoURL" width="40px"></div>
@@ -57,23 +56,23 @@
               <div class="v-margin25"></div>
               <button @click="debug" class="btn btn-info">debug</button>
               <div class="v-margin25"></div>
-
-              <div v-for="(comment, key, index) in comments" :key="index">
-                <div class="card">
-                  <div class="card-header">
-                    <img class="mr-3" src="https://picsum.photos/200" width="40px">
-                    {{ comment.username }} {{ comment.createdAt.seconds | toDate }}
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">{{ comment.field1 }}</h5>
-                    <p class="card-text">{{ comment.text }}</p>
-                    <a href="#" class="btn btn-info">Go somewhere</a>
-                  </div>
-                </div>
-                <div class="v-margin25"></div>
-              </div>
-
             </div>
+          </div>
+          <div class="v-margin25"></div>
+
+          <div v-for="(comment, key, index) in comments" :key="index">
+            <div class="card">
+              <div class="card-header">
+                <img class="mr-3" src="https://picsum.photos/200" width="40px">
+                {{ comment.username }} {{ comment.createdAt.seconds | toDate }}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{ comment.field1 }}</h5>
+                <p class="card-text">{{ comment.text }}</p>
+                <a href="#" class="btn btn-info">Go somewhere</a>
+              </div>
+            </div>
+            <div class="v-margin25"></div>
           </div>
 
         </div>
