@@ -48,7 +48,12 @@
                 </button>
 
               <div class="v-margin25"></div>
-              <button @click="dbRefer" class="btn btn-warning">db refer</button>
+              <button @click="dbRefer" class="btn btn-warning">
+                <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+                db refer
+              </button>
               <div class="v-margin25"></div>
               <button @click="debug" class="btn btn-info">debug</button>
               <div class="v-margin25"></div>
@@ -57,7 +62,7 @@
                 <div class="card">
                   <div class="card-header">
                     <img class="mr-3" src="https://picsum.photos/200" width="40px">
-                    {{ comment.username }} {{ comment.createdAt }}
+                    {{ comment.username }} {{ comment.createdAt.seconds | toDate }}
                   </div>
                   <div class="card-body">
                     <h5 class="card-title">{{ comment.field1 }}</h5>
@@ -101,6 +106,12 @@ export default {
       show: false
     }
   },
+  filters: {
+    toDate (value) {
+      let date = new Date(value * 1000);
+      return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() ;
+    }
+  },
   // firestore() {
   //   return {
   //     comments: db.collection('message')
@@ -116,21 +127,24 @@ export default {
       common.logout();
     },
     dbRefer () {
+      this.show = true;
       let dbRef = db.collection('message').orderBy('createdAt');
       let allData = dbRef.get()
         .then(snapshot => {
           let array = [];
           snapshot.forEach(doc => {
-            console.log(doc.id, "=>", doc.data());
+            // console.log(doc.id, "=>", doc.data());
             let tmpArray = JSON.parse(JSON.stringify(doc.data()));
             array.push(tmpArray);
           });
           console.dir(array);
           this.comments = array;
+          this.show = false;
           // return array;
         })
         .catch(err => {
           console.log("Error getting documents", err);
+          this.show = false;
         });
     },
     dbAdd () {
