@@ -25,6 +25,8 @@
 
               <div class="v-margin25"></div>
               <button @click="dbRefer" class="btn btn-warning">db refer</button>
+              <div class="v-margin25"></div>
+              <button @click="dbAdd" class="btn btn-warning">db add</button>
             </div>
           </div>
 
@@ -78,6 +80,11 @@ export default {
         .catch(err => {
           console.log("Error getting documents", err);
         });
+    },
+    dbAdd () {
+      db.collection('testCollection').add({
+        test: 'aaa'
+      })
     }
   }
 };
