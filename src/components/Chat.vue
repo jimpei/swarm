@@ -16,7 +16,8 @@
 
               <div class="media">
                 <div v-if="user.photoURL"><img class="mr-3" :src="user.photoURL" width="40px"></div>
-                <div v-else><img class="mr-3" src="../assets/fantasy_game_character_slime.png" width="40px"></div>
+                <!-- <div v-else><img class="mr-3" src="../assets/fantasy_game_character_slime.png" width="40px"></div> -->
+                <div v-else><img class="mr-3" src="https://picsum.photos/200" width="40px"></div>
                 <div class="media-body">
                   <h5 class="mt-0">{{ user.email }}</h5>
                   user display name => {{ user.displayName }}
