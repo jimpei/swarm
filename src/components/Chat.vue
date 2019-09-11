@@ -54,8 +54,8 @@
                 db refer
               </button>
               <div class="v-margin25"></div>
-              <button @click="debug" class="btn btn-info">debug</button>
-              <div class="v-margin25"></div>
+              <!-- <button @click="debug" class="btn btn-info">debug</button> -->
+              <!-- <div class="v-margin25"></div> -->
             </div>
           </div>
           <div class="v-margin25"></div>
@@ -111,11 +111,19 @@ export default {
       return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() ;
     }
   },
-  // firestore() {
-  //   return {
-  //     comments: db.collection('message')
-  //   }
-  // },
+  mounted() {
+    db.collection("chat").doc("room1").collection('messages').orderBy("createdAt", 'desc')
+    .onSnapshot(res => {
+      let array = [];
+      res.docs.forEach(doc => {
+        // console.log(doc.id, "=>", doc.data());
+        let tmpArray = JSON.parse(JSON.stringify(doc.data()));
+        array.push(tmpArray);
+      });
+      console.dir(array);
+      this.comments = array;
+    });
+  },
   computed: {
     user() {
       return this.$store.getters.user;
@@ -127,7 +135,7 @@ export default {
     },
     dbRefer () {
       this.show = true;
-      let dbRef = db.collection('message').orderBy('createdAt');
+      let dbRef = db.collection('chat').doc('room1').collection('messages');
       let allData = dbRef.get()
         .then(snapshot => {
           let array = [];
@@ -148,13 +156,14 @@ export default {
     },
     dbAdd () {
       this.show = true;
-      db.collection('message').add({
+      db.collection('chat').doc('room1').collection('messages').add({
         username: this.user.email,
         field1: this.field1,
         text: this.text,
         createdAt: new Date()
       }).then(result => {
         console.log('db insert success');
+        console.log(result);
         this.show = false;
       }).catch(error => {
         console.log('db insert error')
