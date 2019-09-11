@@ -29,6 +29,12 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: "/scroll",
+      name: "scroll",
+      component: () => import("./views/ScrollView.vue"),
+      meta: { requiresAuth: true }
+    },
+    {
       path: "/signup",
       name: "signup",
       component: () => import("./views/SignUpView.vue")
