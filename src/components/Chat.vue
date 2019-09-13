@@ -74,6 +74,7 @@
             </div>
             <div class="v-margin25"></div>
           </div>
+          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
 
         </div>
 
@@ -90,10 +91,12 @@
 // import firebase from "firebase";
 import store from "../store";
 import {db} from "../firebase";
+import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
   name: "chat",
   components: {
+    InfiniteLoading
   },
   data () {
     return {
@@ -102,7 +105,8 @@ export default {
       text: '',
       createdAt: null,
       comments: [],
-      show: false
+      show: false,
+      cnt: 5
     }
   },
   filters: {
@@ -112,8 +116,10 @@ export default {
     }
   },
   mounted() {
-    db.collection("chat").doc("room1").collection('messages').orderBy("createdAt", 'desc')
+    db.collection("chat").doc("room1").collection('messages').orderBy("createdAt", 'desc').limit(5)
     .onSnapshot(res => {
+      console.log('mounted start');
+      // console.log('cnt = ' + this.cnt);
       let array = [];
       res.docs.forEach(doc => {
         // console.log(doc.id, "=>", doc.data());
@@ -135,7 +141,7 @@ export default {
     },
     dbRefer () {
       this.show = true;
-      let dbRef = db.collection('chat').doc('room1').collection('messages');
+      let dbRef = db.collection('chat').doc('room1').collection('messages').orderBy("createdAt", 'desc').limit(5);
       let allData = dbRef.get()
         .then(snapshot => {
           let array = [];
@@ -163,12 +169,50 @@ export default {
         createdAt: new Date()
       }).then(result => {
         console.log('db insert success');
-        console.log(result);
+        // console.log(result);
         this.show = false;
       }).catch(error => {
         console.log('db insert error')
         this.show = false;
       });
+    },
+    infiniteHandler($state) {
+      // console.log('debug cnt' + this.cnt);
+
+      this.show = true;
+      let dbRef = db.collection('chat').doc('room1').collection('messages').orderBy("createdAt", 'desc').limit(this.cnt);
+      let allData = dbRef.get()
+        .then(snapshot => {
+          let array = [];
+          snapshot.forEach(doc => {
+            // console.log(doc.id, "=>", doc.data());
+            let tmpArray = JSON.parse(JSON.stringify(doc.data()));
+            array.push(tmpArray);
+          });
+          console.dir(array);
+          this.comments = array;
+          this.show = false;
+          // return array;
+        })
+        .catch(err => {
+          console.log("Error getting documents", err);
+          this.show = false;
+        });
+
+      this.cnt = this.cnt + 3;
+      var cntMax = this.cnt;
+
+      setTimeout( () => {
+        // console.log(cntMax)
+        if (cntMax > 15) {
+          console.log('infinite-loading complete')
+          $state.complete();
+        } else {
+          console.log('infinite-loading loaded')
+          $state.loaded();
+        }
+      }, 2000 );
+
     },
     debug () {
       console.log('debug start');
