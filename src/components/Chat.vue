@@ -64,11 +64,11 @@
             <div class="card">
               <div class="card-header">
                 <img class="mr-3" src="https://picsum.photos/200" width="40px">
-                {{ comment.username }} {{ comment.createdAt.seconds | toDate }}
+                {{ comment.data().username }} {{ comment.data().createdAt.seconds | toDate }}
               </div>
               <div class="card-body">
-                <h5 class="card-title">{{ comment.field1 }}</h5>
-                <p class="card-text">{{ comment.text }}</p>
+                <h5 class="card-title">{{ comment.data().field1 }}</h5>
+                <p class="card-text">{{ comment.id }} <br> {{ comment.data().text }}</p>
                 <a href="#" class="btn btn-info">Go somewhere</a>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default {
       let array = [];
       res.docs.forEach(doc => {
         // console.log(doc.id, "=>", doc.data());
-        let tmpArray = JSON.parse(JSON.stringify(doc.data()));
+        let tmpArray = doc;
         array.push(tmpArray);
       });
       console.dir(array);
@@ -148,7 +148,7 @@ export default {
           let array = [];
           snapshot.forEach(doc => {
             // console.log(doc.id, "=>", doc.data());
-            let tmpArray = JSON.parse(JSON.stringify(doc.data()));
+            let tmpArray = doc;
             array.push(tmpArray);
           });
           console.dir(array);
@@ -187,7 +187,8 @@ export default {
           let array = [];
           snapshot.forEach(doc => {
             // console.log(doc.id, "=>", doc.data());
-            let tmpArray = JSON.parse(JSON.stringify(doc.data()));
+            // let tmpArray = JSON.parse(JSON.stringify(doc.data()));
+            let tmpArray = doc;
             array.push(tmpArray);
           });
           console.dir(array);
