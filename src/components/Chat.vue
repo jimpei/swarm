@@ -112,7 +112,8 @@ export default {
   filters: {
     toDate (value) {
       let date = new Date(value * 1000);
-      return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() ;
+      let month = date.getMonth() + 1;
+      return date.getFullYear() + '/' + month + '/' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() ;
     }
   },
   mounted() {
