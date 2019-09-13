@@ -68,8 +68,8 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title">{{ comment.data().field1 }}</h5>
-                <p class="card-text">{{ comment.id }} <br> {{ comment.data().text }}</p>
-                <a href="#" class="btn btn-info">Go somewhere</a>
+                <p class="card-text">{{ comment.data().text }}</p>
+                <button @click="dbDelete(comment.id)" class="btn btn-danger">delete {{ comment.id }}</button>
               </div>
             </div>
             <div class="v-margin25"></div>
@@ -170,10 +170,20 @@ export default {
         createdAt: new Date()
       }).then(result => {
         console.log('db insert success');
-        // console.log(result);
         this.show = false;
       }).catch(error => {
         console.log('db insert error')
+        this.show = false;
+      });
+    },
+    dbDelete (id) {
+      this.show = true;
+      db.collection('chat').doc('room1').collection('messages').doc(id).delete()
+      .then(result => {
+        console.log('db delete success');
+        this.show = false;
+      }).catch(error => {
+        console.log('db delete error')
         this.show = false;
       });
     },
