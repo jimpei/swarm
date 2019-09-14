@@ -47,13 +47,6 @@
                 </button>
 
               <div class="v-margin25"></div>
-              <button @click="dbRefer" class="btn btn-warning">
-                <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
-                  <span class="sr-only">Loading...</span>
-                </div>
-                db refer
-              </button>
-              <div class="v-margin25"></div>
               <!-- <button @click="debug" class="btn btn-info">debug</button> -->
               <!-- <div class="v-margin25"></div> -->
             </div>
@@ -117,7 +110,7 @@ export default {
     }
   },
   mounted() {
-    db.collection("chat").doc("room1").collection('messages').orderBy("createdAt", 'desc').limit(5)
+    db.collection("chat").doc("room1").collection('messages').orderBy("createdAt", 'desc')
     .onSnapshot(res => {
       console.log('mounted start');
       // console.log('cnt = ' + this.cnt);
@@ -140,27 +133,27 @@ export default {
     doLogout () {
       common.logout();
     },
-    dbRefer () {
-      this.show = true;
-      let dbRef = db.collection('chat').doc('room1').collection('messages').orderBy("createdAt", 'desc').limit(5);
-      let allData = dbRef.get()
-        .then(snapshot => {
-          let array = [];
-          snapshot.forEach(doc => {
-            // console.log(doc.id, "=>", doc.data());
-            let tmpArray = doc;
-            array.push(tmpArray);
-          });
-          console.dir(array);
-          this.comments = array;
-          this.show = false;
-          // return array;
-        })
-        .catch(err => {
-          console.log("Error getting documents", err);
-          this.show = false;
-        });
-    },
+    // dbRefer () {
+    //   this.show = true;
+    //   let dbRef = db.collection('chat').doc('room1').collection('messages').orderBy("createdAt", 'desc').limit(5);
+    //   let allData = dbRef.get()
+    //     .then(snapshot => {
+    //       let array = [];
+    //       snapshot.forEach(doc => {
+    //         // console.log(doc.id, "=>", doc.data());
+    //         let tmpArray = doc;
+    //         array.push(tmpArray);
+    //       });
+    //       console.dir(array);
+    //       this.comments = array;
+    //       this.show = false;
+    //       // return array;
+    //     })
+    //     .catch(err => {
+    //       console.log("Error getting documents", err);
+    //       this.show = false;
+    //     });
+    // },
     dbAdd () {
       this.show = true;
       db.collection('chat').doc('room1').collection('messages').add({
