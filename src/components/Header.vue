@@ -14,6 +14,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <router-link class="dropdown-item" to="/activity">Activity</router-link>
+            <router-link class="dropdown-item" to="/profile">Profile</router-link>
             <router-link class="dropdown-item" to="/chat">Chat</router-link>
             <router-link class="dropdown-item" to="/scroll">MUGEN Scroll Test</router-link>
             <div class="dropdown-divider"></div>
