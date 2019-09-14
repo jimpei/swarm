@@ -136,7 +136,6 @@ export default {
         photoURL: imageUrl
       }).then(() => {
         console.log('updatePhotoURL success.');
-        // this.displayName = '';
         this.show = false;
       }).catch((error) => {
         console.log('updatePhotoURL error.');
@@ -161,21 +160,19 @@ export default {
     uploadImage() {
       console.log('upload start');
       console.log('image name : ' + this.imageName);
-      console.log(this.imageFile);
+      this.show = true;
+      // console.log(this.imageFile);
       let file = this.imageFile;
       const reader = new FileReader();
       reader.onloadend = e => {
         let blob = new Blob([e.target.result], { type: "image/jpeg" });
         let storageRef = firebase.storage().ref('images/' + file.name);
         storageRef.put(blob).then(snapshot => {
-          console.log('debug snapshot');
-          // console.log(snapshot);
           snapshot.ref.getDownloadURL().then(downloadURL => {
-            console.log('getDownloadURL start');
-            console.log(downloadURL);
-            // this.imageUrl = downloadURL;
-            // console.log('debug url : ' + this.imageUrl);
             this.updatePhotoURL(downloadURL);
+            this.imageFilePreview = '';
+            this.imageFile = '';
+            this.imageName = '';
           });
         });
       }
