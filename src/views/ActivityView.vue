@@ -9,7 +9,7 @@
 
         <div class="mx-auto max-width-layout">
           <div class="card text-left">
-            <div class="card-header bg-warning">welcome {{ user.uid }} </div>
+            <div class="card-header bg-warning">welcome {{ user.displayName }} </div>
 
             <div class="card-body">
               <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
@@ -20,7 +20,8 @@
                 <div v-else><img class="mr-3" src="../assets/fantasy_game_character_slime.png" width="40px"></div>
                 <div class="media-body">
                   <h5 class="mt-0">{{ user.email }}</h5>
-                  user display name => {{ user.displayName }}
+                  user display name => {{ user.displayName }} <br>
+                  user display name => {{ user.uid }}
                 </div>
               </div>
 
