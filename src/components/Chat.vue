@@ -163,6 +163,10 @@ export default {
         createdAt: new Date()
       }).then(result => {
         console.log('db insert success');
+
+        // 入力フォームを初期化
+        this.field1 = 'A';
+        this.text = '';
         this.show = false;
       }).catch(error => {
         console.log('db insert error')
