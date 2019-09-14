@@ -36,7 +36,7 @@
 
               <div class="v-margin25"></div>
               <div class="text-right">
-                <button @click="update" class="btn btn-warning ">
+                <button @click="updateDisplayName" class="btn btn-warning ">
                   <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
                     <span class="sr-only">Loading...</span>
                   </div>
@@ -88,7 +88,6 @@ export default {
       imageName: '',
       imageFile: '',
       imageFilePreview: '',
-      imageUrl: '',
       show: false,
       warning: false
     }
@@ -103,22 +102,21 @@ export default {
     }
   },
   methods: {
-    update () {
-      console.log('update start');
+    updateDisplayName () {
+      console.log('updateDisplayName start');
       this.show = true;
       this.warning = false;
       if (this.displayName) {
         console.log('update displayName => ' + this.displayName);
         let user = firebase.auth().currentUser;
         user.updateProfile({
-          displayName: this.displayName,
-          // photoURL: "https://example.com/jane-q-user/profile.jpg"
-        }).then( () => {
-          console.log('update success.');
+          displayName: this.displayName
+        }).then(() => {
+          console.log('updateDisplayName success.');
           this.displayName = '';
           this.show = false;
         }).catch((error) => {
-          console.log('update error.');
+          console.log('updateDisplayName error.');
           this.show = false;
         });
 
@@ -127,6 +125,23 @@ export default {
         this.warning = true;
         this.show = false;
       }
+    },
+    updatePhotoURL (imageUrl) {
+      console.log('updatePhotoURL start');
+      console.log('update PhotoURL => ' + imageUrl);
+
+      let user = firebase.auth().currentUser;
+
+      user.updateProfile({
+        photoURL: imageUrl
+      }).then(() => {
+        console.log('updatePhotoURL success.');
+        // this.displayName = '';
+        this.show = false;
+      }).catch((error) => {
+        console.log('updatePhotoURL error.');
+        this.show = false;
+      });
     },
     onFileChange(e) {
       console.log('onFileChange start');
@@ -157,20 +172,10 @@ export default {
           // console.log(snapshot);
           snapshot.ref.getDownloadURL().then(downloadURL => {
             console.log('getDownloadURL start');
-            // console.log(downloadURL);
-            this.imageUrl = downloadURL;
-            const bucketName = 'swarm-16280.appspot.com';
-            const filePath = this.imageName;
-
-            // db.collection("images").add({
-            //   downloadURL,
-            //   downloadUrl:
-            //     `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` +
-            //     "%2F" +
-            //     `${encodeURIComponent(filePath)}?alt=media`,
-            //   timestamp: Date.now()
-            // });
-            // this.getImages();
+            console.log(downloadURL);
+            // this.imageUrl = downloadURL;
+            // console.log('debug url : ' + this.imageUrl);
+            this.updatePhotoURL(downloadURL);
           });
         });
       }
@@ -178,30 +183,6 @@ export default {
           console.log("Failed file read: " + e.toString());
       };
       reader.readAsArrayBuffer(file);
-      // let storageRef = firebase.storage().ref();
-      // // ファイルのパスを設定
-      // let imageRef = storageRef.child(`images/${this.imageName}`);
-      // // ファイルを適用してファイルアップロード開始
-      // imageRef.put(this.imageFile).then(snapshot => {
-      //   console.log('put start');
-      //   console.log(snapshot);
-        // snapshot.ref.getDownloadURL().then(downloadURL => {
-        //   console.log('getDownloadURL start');
-        //   console.log(downloadURL);
-        //   this.imageUrl = downloadURL;
-        //   const bucketName = 'swarm-16280.appspot.com';
-        //   const filePath = this.imageName;
-        //   db.collection("images").add({
-        //     downloadURL,
-        //     downloadUrl:
-        //       `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` +
-        //       "%2F" +
-        //       `${encodeURIComponent(filePath)}?alt=media`,
-        //     timestamp: Date.now()
-        //   });
-        //   this.getImages();
-        // });
-      // });
     }
   }
 };
