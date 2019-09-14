@@ -30,12 +30,6 @@
                         <input type="text" readonly class="form-control" id="staticEmail" :value=user.email>
                       </div>
                     </div>
-                    <!-- <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                      <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                      </div>
-                    </div> -->
                   </form>
                 </div>
               </div>
@@ -48,6 +42,10 @@
                   </div>
                   更新
                 </button>
+              </div>
+              <div class="v-margin25"></div>
+              <div v-if="warning" class="alert alert-warning" role="alert">
+                変更されていないので更新されなかったよ.
               </div>
             </div>
           </div>
@@ -75,7 +73,8 @@ export default {
   data () {
     return {
       displayName : '',
-      show: false
+      show: false,
+      warning: false
     }
   },
   filters: {
@@ -91,6 +90,7 @@ export default {
     update () {
       console.log('update start');
       this.show = true;
+      this.warning = false;
       if (this.displayName) {
         console.log('update displayName => ' + this.displayName);
         let user = firebase.auth().currentUser;
@@ -98,15 +98,17 @@ export default {
           displayName: this.displayName,
           // photoURL: "https://example.com/jane-q-user/profile.jpg"
         }).then( () => {
-          console.log('update success.')
+          console.log('update success.');
+          this.displayName = '';
           this.show = false;
         }).catch((error) => {
-          console.log('update error.')
+          console.log('update error.');
           this.show = false;
         });
 
       } else {
         console.log('no update.');
+        this.warning = true;
         this.show = false;
       }
     }
