@@ -130,10 +130,10 @@ export default {
     },
     onFileChange(e) {
       console.log('onFileChange start');
-      console.log(e);
+      // console.log(e);
       const files = e.target.files || e.dataTransfer.files;
       this.imageFile = files[0];
-      this.imageFilePreview = this.convertImageToPreview(files[0]);
+      this.convertImageToPreview(files[0]);
       this.imageName = files[0].name;
     },
     convertImageToPreview(file) {
@@ -146,13 +146,33 @@ export default {
     uploadImage() {
       console.log('upload start');
       console.log('image name : ' + this.imageName);
+      console.log(this.imageFile);
       let file = this.imageFile;
       const reader = new FileReader();
       reader.onloadend = e => {
-        var blob = new Blob([e.target.result], { type: "image/jpeg" });
-        var storageRef = firebase.storage().ref('images/' + file.name);
-        console.log(file); // Watch Screenshot
-        var uploadTask = storageRef.put(blob);
+        let blob = new Blob([e.target.result], { type: "image/jpeg" });
+        let storageRef = firebase.storage().ref('images/' + file.name);
+        storageRef.put(blob).then(snapshot => {
+          console.log('debug snapshot');
+          // console.log(snapshot);
+          snapshot.ref.getDownloadURL().then(downloadURL => {
+            console.log('getDownloadURL start');
+            // console.log(downloadURL);
+            this.imageUrl = downloadURL;
+            const bucketName = 'swarm-16280.appspot.com';
+            const filePath = this.imageName;
+
+            // db.collection("images").add({
+            //   downloadURL,
+            //   downloadUrl:
+            //     `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` +
+            //     "%2F" +
+            //     `${encodeURIComponent(filePath)}?alt=media`,
+            //   timestamp: Date.now()
+            // });
+            // this.getImages();
+          });
+        });
       }
       reader.onerror = e => {
           console.log("Failed file read: " + e.toString());
