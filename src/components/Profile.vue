@@ -47,6 +47,18 @@
               <div v-if="warning" class="alert alert-warning" role="alert">
                 変更されていないので更新されなかったよ.
               </div>
+
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" @change="onFileChange">
+                    <label class="custom-file-label" for="inputGroupFile04">{{ imageName }}</label>
+                  </div>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" @click="uploadImage">upload</button>
+                  </div>
+                </div>
+                <img v-show="imageFilePreview" class="preview-item-file" :src="imageFilePreview" alt=""/>
+
             </div>
           </div>
 
@@ -64,15 +76,19 @@
 <script>
 import firebase from "@firebase/app";
 import "@firebase/auth";
+import "@firebase/storage";
 
 export default {
-  
   name: "profile",
   components: {
   },
   data () {
     return {
       displayName : '',
+      imageName: '',
+      imageFile: '',
+      imageFilePreview: '',
+      imageUrl: '',
       show: false,
       warning: false
     }
@@ -111,6 +127,61 @@ export default {
         this.warning = true;
         this.show = false;
       }
+    },
+    onFileChange(e) {
+      console.log('onFileChange start');
+      console.log(e);
+      const files = e.target.files || e.dataTransfer.files;
+      this.imageFile = files[0];
+      this.imageFilePreview = this.convertImageToPreview(files[0]);
+      this.imageName = files[0].name;
+    },
+    convertImageToPreview(file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        this.imageFilePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    uploadImage() {
+      console.log('upload start');
+      console.log('image name : ' + this.imageName);
+      let file = this.imageFile;
+      const reader = new FileReader();
+      reader.onloadend = e => {
+        var blob = new Blob([e.target.result], { type: "image/jpeg" });
+        var storageRef = firebase.storage().ref('images/' + file.name);
+        console.log(file); // Watch Screenshot
+        var uploadTask = storageRef.put(blob);
+      }
+      reader.onerror = e => {
+          console.log("Failed file read: " + e.toString());
+      };
+      reader.readAsArrayBuffer(file);
+      // let storageRef = firebase.storage().ref();
+      // // ファイルのパスを設定
+      // let imageRef = storageRef.child(`images/${this.imageName}`);
+      // // ファイルを適用してファイルアップロード開始
+      // imageRef.put(this.imageFile).then(snapshot => {
+      //   console.log('put start');
+      //   console.log(snapshot);
+        // snapshot.ref.getDownloadURL().then(downloadURL => {
+        //   console.log('getDownloadURL start');
+        //   console.log(downloadURL);
+        //   this.imageUrl = downloadURL;
+        //   const bucketName = 'swarm-16280.appspot.com';
+        //   const filePath = this.imageName;
+        //   db.collection("images").add({
+        //     downloadURL,
+        //     downloadUrl:
+        //       `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` +
+        //       "%2F" +
+        //       `${encodeURIComponent(filePath)}?alt=media`,
+        //     timestamp: Date.now()
+        //   });
+        //   this.getImages();
+        // });
+      // });
     }
   }
 };
