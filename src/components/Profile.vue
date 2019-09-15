@@ -104,7 +104,8 @@ export default {
       imageFile: '',
       imageFilePreview: '',
       show: false,
-      warning: false
+      warning: false,
+      uploadSizeError: true,
     }
   },
   filters: {
@@ -162,6 +163,15 @@ export default {
       console.log('onFileChange start');
       // console.log(e);
       const files = e.target.files || e.dataTransfer.files;
+
+      // ファイルサイズが500kb以上の場合はエラーにする
+      const uploadSizeMax = 500000;
+      if (files[0].size > uploadSizeMax) {
+        console.log('upload size(' + uploadSizeMax + ') error. this file size ' + files[0].size);
+        this.uploadSizeError = true;
+        return;
+      }
+
       this.imageFile = files[0];
       this.convertImageToPreview(files[0]);
       this.imageName = files[0].name;
