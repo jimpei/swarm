@@ -81,6 +81,7 @@ export default {
         })
     },
     getRandomImageUrl () {
+      // TODO:画像は自分で生成できる方がよい
       return new Promise((resolve, reject) => {
         fetch('https://picsum.photos/200')
           .then(data => {
@@ -107,6 +108,7 @@ export default {
           resolve();
         }).catch((error) => {
           console.log('updatePhotoURL error.');
+          reject(error);
         });
       });
     }
