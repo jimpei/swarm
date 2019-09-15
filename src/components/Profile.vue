@@ -57,7 +57,7 @@
                     <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" @click="uploadImage">upload</button>
                   </div>
                 </div>
-                <img v-show="imageFilePreview" class="preview-item-file" :src="imageFilePreview" alt=""/>
+                <img v-show="imageFilePreview" class="preview-item-file" :src="imageFilePreview" alt="" width="60px"/>
 
             </div>
           </div>
