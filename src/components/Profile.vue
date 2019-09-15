@@ -95,6 +95,7 @@
 import firebase from "@firebase/app";
 import "@firebase/auth";
 import "@firebase/storage";
+import moment from "moment";
 
 export default {
   name: "profile",
@@ -195,12 +196,15 @@ export default {
       // 画像アップロードボタンメソッド
       console.log('upload start');
       console.log('image name : ' + this.imageName);
+      let date = moment().format('YYYYMMDDHHmmss');
+      let uploadFileName = 'images/' + this.user.uid + '/' + date + '_' + this.imageFile.name;
+      console.log('upload file name : ' + uploadFileName);
+
       this.show = true;
-      let file = this.imageFile;
       const reader = new FileReader();
       reader.onloadend = e => {
         let blob = new Blob([e.target.result], { type: "image/jpeg" });
-        let storageRef = firebase.storage().ref('images/' + file.name);
+        let storageRef = firebase.storage().ref(uploadFileName);
         storageRef.put(blob).then(snapshot => {
           // ユーザ情報にアイコンのURLをセットする
           snapshot.ref.getDownloadURL().then(downloadURL => {
@@ -214,7 +218,7 @@ export default {
       reader.onerror = e => {
           console.log("Failed file read: " + e.toString());
       };
-      reader.readAsArrayBuffer(file);
+      reader.readAsArrayBuffer(this.imageFile);
     }
   }
 };
