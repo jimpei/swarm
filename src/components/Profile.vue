@@ -42,6 +42,11 @@
                       </div>
                     </div>
                     <div class="v-margin25"></div>
+                    <div v-if="uploadSizeError" class="alert alert-warning" role="alert">
+                      画像サイズは{{ uploadSizeMax | byteToKBite }} KB以下にしてください。
+                    </div>
+
+                    <div class="v-margin25"></div>
 
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">ユーザ名</label>
@@ -69,11 +74,9 @@
                 </button>
               </div>
               <div class="v-margin25"></div>
-              <div v-if="warning" class="alert alert-warning" role="alert">
+              <div v-if="noChangeWarning" class="alert alert-warning" role="alert">
                 変更されていないので更新されなかったよ.
               </div>
-
-
             </div>
           </div>
 
@@ -103,12 +106,16 @@ export default {
       imageName: '',
       imageFile: '',
       imageFilePreview: '',
+      uploadSizeMax : '500000',
       show: false,
-      warning: false,
-      uploadSizeError: true,
+      noChangeWarning: false,
+      uploadSizeError: false,
     }
   },
   filters: {
+    byteToKBite (value) {
+      return value.slice(0, -3);
+    }
   },
   mounted() {
   },
@@ -121,7 +128,7 @@ export default {
     updateDisplayName () {
       console.log('updateDisplayName start');
       this.show = true;
-      this.warning = false;
+      this.noChangeWarning = false;
       if (this.displayName) {
         console.log('update displayName => ' + this.displayName);
         let user = firebase.auth().currentUser;
@@ -138,7 +145,7 @@ export default {
 
       } else {
         console.log('no update.');
-        this.warning = true;
+        this.noChangeWarning = true;
         this.show = false;
       }
     },
@@ -161,13 +168,13 @@ export default {
     onFileChange(e) {
       // 画像フォームにファイルをセットしたら発火する
       console.log('onFileChange start');
+      this.uploadSizeError = false;
       // console.log(e);
       const files = e.target.files || e.dataTransfer.files;
 
       // ファイルサイズが500kb以上の場合はエラーにする
-      const uploadSizeMax = 500000;
-      if (files[0].size > uploadSizeMax) {
-        console.log('upload size(' + uploadSizeMax + ') error. this file size ' + files[0].size);
+      if (files[0].size > this.uploadSizeMax) {
+        console.log('upload size(' +this.uploadSizeMax + ') error. this file size ' + files[0].size);
         this.uploadSizeError = true;
         return;
       }
