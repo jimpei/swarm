@@ -13,11 +13,36 @@
               <h4 class="card-title text-left text-warning">ユーザ情報</h4>
               <!-- <p class="card-text">With supposrting text below as a natural lead-in to additional content.</p> -->
 
-              <div class="media">
-                <div v-if="user.photoURL"><img class="mr-3" :src="user.photoURL" width="60px"></div>
-                <div v-else><img class="mr-3" src="../assets/fantasy_game_character_slime.png" width="60px"></div>
-                <div class="media-body">
+              <!-- <div class="media"> -->
+                <!-- <div class="media-body"> -->
                   <form>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">アイコン</label>
+                      <div class="col-sm-8">
+                        <div v-if="user.photoURL">
+                          <img class="mr-3" :src="user.photoURL" width="60px">
+                          =>　
+                          <img v-show="imageFilePreview" class="preview-item-file" :src="imageFilePreview" alt="" width="60px"/>
+                        </div>
+                        <div v-else>
+                          <img class="mr-3" src="../assets/fantasy_game_character_slime.png" width="60px">
+                          =>　
+                          <img v-show="imageFilePreview" class="preview-item-file" :src="imageFilePreview" alt="" width="60px"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="v-margin25"></div>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" @change="onFileChange">
+                        <label class="custom-file-label" for="inputGroupFile04">{{ imageName }}</label>
+                      </div>
+                      <div class="input-group-append">
+                        <button class="btn btn-warning" type="button" id="inputGroupFileAddon04" @click="uploadImage">アイコン更新</button>
+                      </div>
+                    </div>
+                    <div class="v-margin25"></div>
+
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">ユーザ名</label>
                       <div class="col-sm-8">
@@ -31,8 +56,8 @@
                       </div>
                     </div>
                   </form>
-                </div>
-              </div>
+                <!-- </div> -->
+              <!-- </div> -->
 
               <div class="v-margin25"></div>
               <div class="text-right">
@@ -48,16 +73,6 @@
                 変更されていないので更新されなかったよ.
               </div>
 
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" @change="onFileChange">
-                    <label class="custom-file-label" for="inputGroupFile04">{{ imageName }}</label>
-                  </div>
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" @click="uploadImage">upload</button>
-                  </div>
-                </div>
-                <img v-show="imageFilePreview" class="preview-item-file" :src="imageFilePreview" alt="" width="60px"/>
 
             </div>
           </div>
