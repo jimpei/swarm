@@ -41,6 +41,9 @@
                 <div v-if="uploadSizeError" class="alert alert-warning" role="alert">
                   画像サイズは{{ uploadSizeMax | byteToKBite }} KB以下にしてください。
                 </div>
+                <div v-if="noImageError" class="alert alert-warning" role="alert">
+                  画像以外はuploadできません。
+                </div>
 
                 <div class="v-margin25"></div>
 
@@ -105,6 +108,7 @@ export default {
       show: false,
       noChangeWarning: false,
       uploadSizeError: false,
+      noImageError: false,
     }
   },
   filters: {
@@ -164,13 +168,19 @@ export default {
       // 画像フォームにファイルをセットしたら発火する
       console.log('onFileChange start');
       this.uploadSizeError = false;
-      // console.log(e);
+      this.noImageError = false;
       const files = e.target.files || e.dataTransfer.files;
 
       // ファイルサイズが500kb以上の場合はエラーにする
       if (files[0].size > this.uploadSizeMax) {
         console.log('upload size(' +this.uploadSizeMax + ') error. this file size ' + files[0].size);
         this.uploadSizeError = true;
+        return;
+      }
+      // 画像以外をuploadしたらエラー
+      if (!files[0].type.match(/image/)) {
+        console.log('no image error');
+        this.noImageError = true;
         return;
       }
 
