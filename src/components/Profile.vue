@@ -158,6 +158,7 @@ export default {
       });
     },
     onFileChange(e) {
+      // 画像フォームにファイルをセットしたら発火する
       console.log('onFileChange start');
       // console.log(e);
       const files = e.target.files || e.dataTransfer.files;
@@ -166,6 +167,7 @@ export default {
       this.imageName = files[0].name;
     },
     convertImageToPreview(file) {
+      // 画像をプレビュー用に保存する
       const reader = new FileReader();
       reader.onload = e => {
         this.imageFilePreview = e.target.result;
@@ -173,16 +175,17 @@ export default {
       reader.readAsDataURL(file);
     },
     uploadImage() {
+      // 画像アップロードボタンメソッド
       console.log('upload start');
       console.log('image name : ' + this.imageName);
       this.show = true;
-      // console.log(this.imageFile);
       let file = this.imageFile;
       const reader = new FileReader();
       reader.onloadend = e => {
         let blob = new Blob([e.target.result], { type: "image/jpeg" });
         let storageRef = firebase.storage().ref('images/' + file.name);
         storageRef.put(blob).then(snapshot => {
+          // ユーザ情報にアイコンのURLをセットする
           snapshot.ref.getDownloadURL().then(downloadURL => {
             this.updatePhotoURL(downloadURL);
             this.imageFilePreview = '';
