@@ -21,13 +21,17 @@
                       <div class="col-sm-8">
                         <div v-if="user.photoURL">
                           <img class="mr-3" :src="user.photoURL" width="60px">
-                          =>　
-                          <img v-show="imageFilePreview" class="preview-item-file" :src="imageFilePreview" alt="" width="60px"/>
+                          <div v-show="imageFilePreview">
+                            =>　
+                            <img class="preview-item-file" :src="imageFilePreview" alt="" width="60px"/>
+                          </div>
                         </div>
                         <div v-else>
                           <img class="mr-3" src="../assets/fantasy_game_character_slime.png" width="60px">
-                          =>　
-                          <img v-show="imageFilePreview" class="preview-item-file" :src="imageFilePreview" alt="" width="60px"/>
+                          <div v-show="imageFilePreview">
+                            =>　
+                            <img class="preview-item-file" :src="imageFilePreview" alt="" width="60px"/>
+                          </div>
                         </div>
                       </div>
                     </div>
