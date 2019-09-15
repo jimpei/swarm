@@ -33,7 +33,6 @@
 
         <div class="v-margin25"></div>
         <router-link to="/activity"><button type="submit" class="btn btn-warning">[debug] goto activity</button></router-link>
-
       </div>
 
       <div class="v-margin25"></div>
@@ -48,6 +47,7 @@ import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 import firebase from "@firebase/app";
 import "@firebase/auth";
+import axios from 'axios';
 
 export default {
   name: "signup",
@@ -63,19 +63,54 @@ export default {
     }
   },
   methods: {
-    signUp () {
+     async signUp () {
       this.show = true;
       console.log('debug push signup button');
       firebase.auth().createUserWithEmailAndPassword(this.username, this.password)
-        .then(user => {
+        .then(async user => {
           alert('Create account: ', user.email);
+          // 初期アイコンの取得＆設定
+          let url = await this.getRandomImageUrl();
+          await this.updatePhotoURL(url)
           this.show = false;
-          this.$router.push('/login');
+          this.$router.push('/activity');
         })
         .catch(error => {
           alert(error.message)
           this.show = false;
         })
+    },
+    getRandomImageUrl () {
+      // TODO:画像は自分で生成できる方がよい
+      return new Promise((resolve, reject) => {
+        fetch('https://picsum.photos/200')
+          .then(data => {
+            console.log('image get success => ' + data.url);
+            resolve(data.url);
+          })
+          .catch(error => {
+            console.log('error');
+            reject(error);
+        });
+      });
+    },
+    updatePhotoURL (imageUrl) {
+      return new Promise((resolve, reject) => {
+        console.log('updatePhotoURL start');
+        console.log('update PhotoURL => ' + imageUrl);
+
+        let user = firebase.auth().currentUser;
+
+        user.updateProfile({
+          photoURL: imageUrl
+        }).then(() => {
+          console.log('updatePhotoURL success.');
+          resolve();
+        }).catch((error) => {
+          console.log('updatePhotoURL error.');
+          reject(error);
+        });
+      });
     }
   }
 };
