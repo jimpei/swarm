@@ -12,6 +12,7 @@
 
 <style>
 @import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
+@import "https://unpkg.com/aos@next/dist/aos.css";
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

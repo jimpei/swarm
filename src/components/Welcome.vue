@@ -24,8 +24,27 @@
         <h2>{{ msg }}</h2>
         <div class="v-margin25"></div>
         <img alt="Vue logo" class="logo" src="../assets/swarm_phone.png" width="80%"/>
+        <div class="v-margin25"></div>
+        <div data-aos="fade-fade-right ">
+          <img alt="Vue logo" class="logo" src="../assets/swarm_phone.png" width="30%"/>
+        </div>
+        <div data-aos="fade-down-left">
+          <img alt="Vue logo" class="logo" src="../assets/swarm_phone.png" width="30%"/>
+        </div>
+        <div data-aos="flip-left">
+          <img alt="Vue logo" class="logo" src="../assets/swarm_phone.png" width="30%"/>
+        </div>
+        <div data-aos="zoom-in-up">
+          <img alt="Vue logo" class="logo" src="../assets/swarm_phone.png" width="30%"/>
+        </div>
+        <div data-aos="fade-down"
+            data-aos-easing="linear"
+            data-aos-duration="1500">
+            <img alt="Vue logo" class="logo" src="../assets/swarm_phone.png" width="30%"/>
+        </div>
         <h3>Ecosystem</h3>
         <ul>
+          <div data-aos="flip-right" data-aos-duration="40">
           <li>
             <a href="https://router.vuejs.org" target="_blank" rel="noopener"
               >vue-router</a
@@ -55,6 +74,7 @@
               >awesome-vue</a
             >
           </li>
+          </div>
         </ul>
       </div>
     </div>
