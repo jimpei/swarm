@@ -35,6 +35,12 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: "/geo",
+      name: "geo",
+      component: () => import("./views/GeoView.vue"),
+      meta: { requiresAuth: true }
+    },
+    {
       path: "/scroll",
       name: "scroll",
       component: () => import("./views/ScrollView.vue"),
