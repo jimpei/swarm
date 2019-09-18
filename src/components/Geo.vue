@@ -3,7 +3,7 @@
     <div class="p-3 mb-2 bg-light text-dark">
       <div class="v-margin25"></div>
       <div class="container">
-        <button class="btn btn-warning" @click="getLocation">Geo</button>
+        <button class="btn btn-warning" @click="getLocation">Geocoder</button>
         {{latitude}}、{{longitude}} <br>
         {{ address }}
         <!-- <div id="address"></div> -->
