@@ -4,7 +4,9 @@
       <div class="v-margin25"></div>
       <div class="container">
         <button class="btn btn-warning" @click="getLocation">Geo</button>
-        {{latitude}}、{{longitude}}
+        {{latitude}}、{{longitude}} <br>
+        {{ address }}
+        <!-- <div id="address"></div> -->
       </div>
     </div>
   </div>
@@ -19,7 +21,8 @@ export default {
   data () {
     return {
       latitude: 0,
-      longitude: 0
+      longitude: 0,
+      address: ''
     }
   },
   filters: {
@@ -52,8 +55,22 @@ export default {
     },
     success (position) {
       console.log('debug success');
-      this.latitude = position.coords.latitude
-      this.longitude = position.coords.longitude
+      this.latitude = position.coords.latitude;
+      this.longitude = position.coords.longitude;
+      this.address = '';
+
+      //Google Mapsで住所を取得
+      let geocoder = new google.maps.Geocoder();
+      let latlng = new google.maps.LatLng(this.latitude, this.longitude );
+
+      geocoder.geocode({'latLng': latlng}, (results, status) => {
+        if (status == google.maps.GeocoderStatus.OK) {
+          // document.getElementById('address').innerHTML = results[0].formatted_address;
+          this.address = '' + results[0].formatted_address;
+        } else {
+          alert("エラー" + status);
+        }
+      })
       // coords.latitude	　緯度
       // coords.longitude　経度
       // coords.altitude	　高度
