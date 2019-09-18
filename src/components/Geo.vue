@@ -3,7 +3,12 @@
     <div class="p-3 mb-2 bg-light text-dark">
       <div class="v-margin25"></div>
       <div class="container">
-        <button class="btn btn-warning" @click="getLocation">Geocoder</button>
+        <button class="btn btn-warning" @click="getLocation">
+          <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          Geocoder
+        </button>
         {{latitude}}、{{longitude}} <br>
         {{ address }}
         <!-- <div id="address"></div> -->
@@ -20,6 +25,7 @@ export default {
   },
   data () {
     return {
+      show: false,
       latitude: 0,
       longitude: 0,
       address: ''
@@ -38,6 +44,7 @@ export default {
     },
     getLocation () {
       console.log('debug start');
+      this.show = true;
       if (!navigator.geolocation) {
         alert('現在地情報を取得できませんでした。お使いのブラウザでは現在地情報を利用できない可能性があります。エリアを入力してください。')
         return
@@ -67,7 +74,9 @@ export default {
         if (status == google.maps.GeocoderStatus.OK) {
           // document.getElementById('address').innerHTML = results[0].formatted_address;
           this.address = '' + results[0].formatted_address;
+          this.show = false;
         } else {
+          this.show = false;
           alert("エラー" + status);
         }
       })
@@ -80,6 +89,7 @@ export default {
       // coords.speed　　速度（位置情報を追跡する場合に使用）
     },
     error (error) {
+      this.show = false;
       switch (error.code) {
         case 1: //PERMISSION_DENIED
           alert('位置情報の利用が許可されていません')
