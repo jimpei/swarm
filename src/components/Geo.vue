@@ -12,14 +12,12 @@
         {{latitude}}、{{longitude}} <br>
         {{ address }}
         <!-- <div id="address"></div> -->
-
-        <GmapMap :center="center" :zoom="zoom" style="width: 500px; height: 300px">
+        <GmapMap :center="center" :zoom="zoom" style="height: 300px; ">
           <GmapMarker v-for="(m,id) in marker_items"
             :position="m.position"
             :title="m.title"
             :clickable="true" :draggable="false" :key="id"></GmapMarker>
         </GmapMap>
-
       </div>
     </div>
   </div>
