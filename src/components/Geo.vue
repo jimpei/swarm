@@ -12,12 +12,21 @@
         {{latitude}}、{{longitude}} <br>
         {{ address }}
         <!-- <div id="address"></div> -->
+
+        <GmapMap :center="center" :zoom="zoom" style="width: 500px; height: 300px">
+          <GmapMarker v-for="(m,id) in marker_items"
+            :position="m.position"
+            :title="m.title"
+            :clickable="true" :draggable="false" :key="id"></GmapMarker>
+        </GmapMap>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import VueGoogleMaps from "vue2-google-maps";
 
 export default {
   name: "chat",
@@ -28,7 +37,16 @@ export default {
       show: false,
       latitude: 0,
       longitude: 0,
-      address: ''
+      address: '',
+      center: {lat: 35.71, lng: 139.72},
+      zoom: 14,
+      marker_items: [
+        {position: {lat: 35.71, lng: 139.72}, title: 'marker_1'},
+        {position: {lat: 35.72, lng: 139.73}, title: 'marker_2'},
+        {position: {lat: 35.70, lng: 139.71}, title: 'marker_3'},
+        {position: {lat: 35.71, lng: 139.70}, title: 'marker_4'}
+      ]
+
     }
   },
   filters: {
@@ -64,6 +82,8 @@ export default {
       console.log('debug success');
       this.latitude = position.coords.latitude;
       this.longitude = position.coords.longitude;
+      this.center = {lat: this.latitude, lng: this.longitude};
+      this.zoom = 18;
       this.address = '';
 
       //Google Mapsで住所を取得
