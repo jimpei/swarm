@@ -63,8 +63,8 @@ li {
 .max-width-layout {
   max-width :600px;
 }
-.max-width-layout1000 {
-  max-width :1000px;
+.max-width-layout1400 {
+  max-width :1400px;
 }
 
 

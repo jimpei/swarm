@@ -4,20 +4,11 @@
     <div class="p-3 mb-2 bg-light text-dark">
       <div class="v-margin25"></div>
 
-      <div class="container">
-
-        <div class="mx-auto max-width-layout">
+        <div class="mx-auto max-width-layout1400">
           <div class="card text-left">
             <div class="card-header bg-warning">Qiita </div>
             <div class="card-body">
               <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
-              <div class="v-margin25"></div>
-              <button @click="dbRefer" class="btn btn-warning">
-                <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
-                  <span class="sr-only">dbRefer...</span>
-                </div>
-                dbRefer
-              </button>
               <div class="v-margin25"></div>
               <button @click="dbAdd" class="btn btn-warning">
                 <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
@@ -29,23 +20,9 @@
             </div>
           </div>
           <div class="v-margin25"></div>
-        </div>
 
-        <div class="mx-auto max-width-layout1000">
-          <div class="card-columns">
-
-            <div class="card p-3">
-              <blockquote class="blockquote mb-0 card-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <footer class="blockquote-footer">
-                  <small class="text-muted">
-                    Someone famous in <cite title="Source Title">Source Title</cite>
-                  </small>
-                </footer>
-              </blockquote>
-            </div>
-
-            <div v-for="(qiitaItem, key, index) in qiitaItems" :key="index">
+          <div class="row">
+            <div v-for="(qiitaItem, key, index) in qiitaItems" :key="index" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
               <div class="card">
                 <div class="card-header">
                   <!-- <img class="mr-3" src="https://picsum.photos/200" width="40px"> -->
@@ -57,19 +34,10 @@
                   <!-- <button @click="dbDelete(comment.id)" class="btn btn-danger">delete {{ comment.id }}</button> -->
                 </div>
               </div>
-            </div>
-
-            <div class="card p-3">
-              <blockquote class="blockquote mb-0 card-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <footer class="blockquote-footer">
-                  <small class="text-muted">
-                    Someone famous in <cite title="Source Title">Source Title</cite>
-                  </small>
-                </footer>
-              </blockquote>
+              <div class="v-margin25"></div>
             </div>
           </div>
+
         </div>
 
       </div>
@@ -108,19 +76,19 @@ export default {
     }
   },
   mounted() {
-    // db.collection("chat").doc("room1").collection('messages').orderBy("createdAt", 'desc').limit(5)
-    // .onSnapshot(res => {
-    //   console.log('mounted start');
-    //   // console.log('cnt = ' + this.cnt);
-    //   let array = [];
-    //   res.docs.forEach(doc => {
-    //     // console.log(doc.id, "=>", doc.data());
-    //     let tmpArray = doc;
-    //     array.push(tmpArray);
-    //   });
-    //   console.dir(array);
-    //   this.comments = array;
-    // });
+    db.collection("qiita_items").orderBy("create_date", 'desc')
+    .onSnapshot(res => {
+      console.log('mounted start');
+      // console.log('cnt = ' + this.cnt);
+      let array = [];
+      res.docs.forEach(doc => {
+        // console.log(doc.id, "=>", doc.data());
+        let tmpArray = doc;
+        array.push(tmpArray);
+      });
+      console.dir(array);
+      this.qiitaItems = array;
+    });
   },
   computed: {
     // user() {
@@ -131,27 +99,27 @@ export default {
     debug () {
       console.log('debug start');
     },
-    dbRefer () {
-      this.show = true;
-      let dbRef = db.collection('qiita_items').orderBy("create_date", 'desc');
-      let allData = dbRef.get()
-        .then(snapshot => {
-          let array = [];
-          snapshot.forEach(doc => {
-            // console.log(doc.id, "=>", doc.data());
-            let tmpArray = doc;
-            array.push(tmpArray);
-          });
-          console.dir(array);
-          this.qiitaItems = array;
-          this.show = false;
-          // return array;
-        })
-        .catch(err => {
-          console.log("Error getting documents", err);
-          this.show = false;
-        });
-    },
+    // dbRefer () {
+    //   this.show = true;
+    //   let dbRef = db.collection('qiita_items').orderBy("create_date", 'desc');
+    //   let allData = dbRef.get()
+    //     .then(snapshot => {
+    //       let array = [];
+    //       snapshot.forEach(doc => {
+    //         // console.log(doc.id, "=>", doc.data());
+    //         let tmpArray = doc;
+    //         array.push(tmpArray);
+    //       });
+    //       console.dir(array);
+    //       this.qiitaItems = array;
+    //       this.show = false;
+    //       // return array;
+    //     })
+    //     .catch(err => {
+    //       console.log("Error getting documents", err);
+    //       this.show = false;
+    //     });
+    // },
     dbAdd () {
       this.show = true;
       db.collection('qiita_items').doc('7effbab8fa65f398b731').set({
