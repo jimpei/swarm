@@ -12,13 +12,20 @@
             <div class="card-body">
               <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
               <div class="v-margin25"></div>
-                <button @click="debug" class="btn btn-warning">
-                  <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                  debug
-                </button>
+              <button @click="dbRefer" class="btn btn-warning">
+                <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+                  <span class="sr-only">dbRefer...</span>
+                </div>
+                dbRefer
+              </button>
               <div class="v-margin25"></div>
+              <button @click="dbAdd" class="btn btn-warning">
+                <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+                  <span class="sr-only">dbAdd...</span>
+                </div>
+                dbAdd
+              </button>
+
             </div>
           </div>
           <div class="v-margin25"></div>
@@ -26,12 +33,7 @@
 
         <div class="mx-auto max-width-layout1000">
           <div class="card-columns">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Card title that wraps to a new line</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
+
             <div class="card p-3">
               <blockquote class="blockquote mb-0 card-body">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
@@ -42,34 +44,23 @@
                 </footer>
               </blockquote>
             </div>
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+
+            <div v-for="(qiitaItem, key, index) in qiitaItems" :key="index">
+              <div class="card">
+                <div class="card-header">
+                  <!-- <img class="mr-3" src="https://picsum.photos/200" width="40px"> -->
+                  {{ qiitaItem.data().username }} {{ qiitaItem.data().create_date.seconds | toDate }}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ qiitaItem.data().qiita_url }}</h5>
+                  <p class="card-text">{{ qiitaItem.data().qiita_user }}</p>
+                  <!-- <button @click="dbDelete(comment.id)" class="btn btn-danger">delete {{ comment.id }}</button> -->
+                </div>
               </div>
             </div>
-            <div class="card bg-primary text-white text-center p-3">
-              <blockquote class="blockquote mb-0">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
-                <footer class="blockquote-footer text-white">
-                  <small>
-                    Someone famous in <cite title="Source Title">Source Title</cite>
-                  </small>
-                </footer>
-              </blockquote>
-            </div>
-            <div class="card text-center">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This card has a regular title and short paragraphy of text below it.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-              </div>
-            </div>
-            <div class="card">
-            </div>
-            <div class="card p-3 text-right">
-              <blockquote class="blockquote mb-0">
+
+            <div class="card p-3">
+              <blockquote class="blockquote mb-0 card-body">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
                 <footer class="blockquote-footer">
                   <small class="text-muted">
@@ -77,13 +68,6 @@
                   </small>
                 </footer>
               </blockquote>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is another card with title and supporting text below. This card has some additional content to make it slightly taller overall.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-              </div>
             </div>
           </div>
         </div>
@@ -107,7 +91,7 @@ export default {
   },
   data () {
     return {
-      // username: '',
+      qiitaItems: [],
       // field1: 'A',
       // text: '',
       // createdAt: null,
@@ -124,19 +108,19 @@ export default {
     }
   },
   mounted() {
-    db.collection("chat").doc("room1").collection('messages').orderBy("createdAt", 'desc').limit(5)
-    .onSnapshot(res => {
-      console.log('mounted start');
-      // console.log('cnt = ' + this.cnt);
-      let array = [];
-      res.docs.forEach(doc => {
-        // console.log(doc.id, "=>", doc.data());
-        let tmpArray = doc;
-        array.push(tmpArray);
-      });
-      console.dir(array);
-      this.comments = array;
-    });
+    // db.collection("chat").doc("room1").collection('messages').orderBy("createdAt", 'desc').limit(5)
+    // .onSnapshot(res => {
+    //   console.log('mounted start');
+    //   // console.log('cnt = ' + this.cnt);
+    //   let array = [];
+    //   res.docs.forEach(doc => {
+    //     // console.log(doc.id, "=>", doc.data());
+    //     let tmpArray = doc;
+    //     array.push(tmpArray);
+    //   });
+    //   console.dir(array);
+    //   this.comments = array;
+    // });
   },
   computed: {
     // user() {
@@ -147,40 +131,42 @@ export default {
     debug () {
       console.log('debug start');
     },
-    // dbRefer () {
-    //   this.show = true;
-    //   let dbRef = db.collection('chat').doc('room1').collection('messages').orderBy("createdAt", 'desc').limit(5);
-    //   let allData = dbRef.get()
-    //     .then(snapshot => {
-    //       let array = [];
-    //       snapshot.forEach(doc => {
-    //         // console.log(doc.id, "=>", doc.data());
-    //         let tmpArray = doc;
-    //         array.push(tmpArray);
-    //       });
-    //       console.dir(array);
-    //       this.comments = array;
-    //       this.show = false;
-    //       // return array;
-    //     })
-    //     .catch(err => {
-    //       console.log("Error getting documents", err);
-    //       this.show = false;
-    //     });
-    // },
+    dbRefer () {
+      this.show = true;
+      let dbRef = db.collection('qiita_items').orderBy("create_date", 'desc');
+      let allData = dbRef.get()
+        .then(snapshot => {
+          let array = [];
+          snapshot.forEach(doc => {
+            // console.log(doc.id, "=>", doc.data());
+            let tmpArray = doc;
+            array.push(tmpArray);
+          });
+          console.dir(array);
+          this.qiitaItems = array;
+          this.show = false;
+          // return array;
+        })
+        .catch(err => {
+          console.log("Error getting documents", err);
+          this.show = false;
+        });
+    },
     dbAdd () {
       this.show = true;
-      db.collection('chat').doc('room1').collection('messages').add({
-        username: this.user.email,
-        field1: this.field1,
-        text: this.text,
-        createdAt: new Date()
+      db.collection('qiita_items').doc('7effbab8fa65f398b731').set({
+        qiita_id: '7effbab8fa65f398b731',
+        qiita_title: 'JIRA APIを使用してチケットを作成する',
+        qiita_url: 'https://qiita.com/jimpei/items/7effbab8fa65f398b731',
+        qiita_user: '@jimpei',
+        service_title: 'hoge4',
+        tags : [
+          "jira",
+          "javascript"
+        ],
+        create_date: new Date()
       }).then(result => {
         console.log('db insert success');
-
-        // 入力フォームを初期化
-        this.field1 = 'A';
-        this.text = '';
         this.show = false;
       }).catch(error => {
         console.log('db insert error')
@@ -240,5 +226,3 @@ export default {
   }
 };
 </script>
-
-
