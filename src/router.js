@@ -41,6 +41,12 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: "/qiita",
+      name: "qiita",
+      component: () => import("./views/QiitaView.vue"),
+      meta: { requiresAuth: true }
+    },
+    {
       path: "/scroll",
       name: "scroll",
       component: () => import("./views/ScrollView.vue"),
