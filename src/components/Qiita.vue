@@ -8,71 +8,87 @@
 
         <div class="mx-auto max-width-layout">
           <div class="card text-left">
-            <div class="card-header bg-warning">Qiita {{ user.uid }} </div>
-
+            <div class="card-header bg-warning">Qiita </div>
             <div class="card-body">
               <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
-
-              <div class="media">
-                <div v-if="user.photoURL"><img class="mr-3" :src="user.photoURL" width="40px"></div>
-                <!-- <div v-else><img class="mr-3" src="../assets/fantasy_game_character_slime.png" width="40px"></div> -->
-                <div v-else><img class="mr-3" src="https://picsum.photos/200" width="40px"></div>
-                <div class="media-body">
-                  <h5 class="mt-0">{{ user.email }}</h5>
-                  user display name => {{ user.displayName }}
-                </div>
-              </div>
               <div class="v-margin25"></div>
-              <form>
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Example select</label>
-                  <select class="form-control" id="exampleFormControlSelect1" v-model="field1">
-                    <option>A</option>
-                    <option>B</option>
-                    <option>C</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Example textarea</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="text"></textarea>
-                </div>
-                <div class="v-margin25"></div>
-                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-              </form>
-                <button @click="dbAdd" class="btn btn-warning">
+                <button @click="debug" class="btn btn-warning">
                   <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
                     <span class="sr-only">Loading...</span>
                   </div>
-                  db add
+                  debug
                 </button>
-
               <div class="v-margin25"></div>
-              <!-- <button @click="debug" class="btn btn-info">debug</button> -->
-              <!-- <div class="v-margin25"></div> -->
             </div>
           </div>
           <div class="v-margin25"></div>
+        </div>
 
-          <div v-for="(comment, key, index) in comments" :key="index">
+        <div class="mx-auto max-width-layout1000">
+          <div class="card-columns">
             <div class="card">
-              <div class="card-header">
-                <img class="mr-3" src="https://picsum.photos/200" width="40px">
-                {{ comment.data().username }} {{ comment.data().createdAt.seconds | toDate }}
-              </div>
               <div class="card-body">
-                <h5 class="card-title">{{ comment.data().field1 }}</h5>
-                <p class="card-text">{{ comment.data().text }}</p>
-                <button @click="dbDelete(comment.id)" class="btn btn-danger">delete {{ comment.id }}</button>
+                <h5 class="card-title">Card title that wraps to a new line</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               </div>
             </div>
-            <div class="v-margin25"></div>
+            <div class="card p-3">
+              <blockquote class="blockquote mb-0 card-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <footer class="blockquote-footer">
+                  <small class="text-muted">
+                    Someone famous in <cite title="Source Title">Source Title</cite>
+                  </small>
+                </footer>
+              </blockquote>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+            <div class="card bg-primary text-white text-center p-3">
+              <blockquote class="blockquote mb-0">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
+                <footer class="blockquote-footer text-white">
+                  <small>
+                    Someone famous in <cite title="Source Title">Source Title</cite>
+                  </small>
+                </footer>
+              </blockquote>
+            </div>
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This card has a regular title and short paragraphy of text below it.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+            <div class="card">
+            </div>
+            <div class="card p-3 text-right">
+              <blockquote class="blockquote mb-0">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <footer class="blockquote-footer">
+                  <small class="text-muted">
+                    Someone famous in <cite title="Source Title">Source Title</cite>
+                  </small>
+                </footer>
+              </blockquote>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is another card with title and supporting text below. This card has some additional content to make it slightly taller overall.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
           </div>
-          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-
         </div>
 
       </div>
-
       <div class="v-margin25"></div>
     </div>
 
@@ -82,24 +98,22 @@
 <script>
 // @ is an alias to /src
 // import firebase from "firebase";
-import store from "../store";
+// import store from "../store";
 import {db} from "../firebase";
-import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
   name: "qiita",
   components: {
-    InfiniteLoading
   },
   data () {
     return {
-      username: '',
-      field1: 'A',
-      text: '',
-      createdAt: null,
-      comments: [],
+      // username: '',
+      // field1: 'A',
+      // text: '',
+      // createdAt: null,
+      // comments: [],
       show: false,
-      cnt: 3
+      // cnt: 3
     }
   },
   filters: {
@@ -125,13 +139,13 @@ export default {
     });
   },
   computed: {
-    user() {
-      return this.$store.getters.user;
-    }
+    // user() {
+    //   return this.$store.getters.user;
+    // }
   },
   methods: {
-    doLogout () {
-      common.logout();
+    debug () {
+      console.log('debug start');
     },
     // dbRefer () {
     //   this.show = true;
@@ -222,12 +236,6 @@ export default {
         }
       }, 2000 );
 
-    },
-    debug () {
-      console.log('debug start');
-      console.log(this.user.email);
-      console.log(new Date(1568103213*1000));
-      console.log('debug end');
     }
   }
 };
