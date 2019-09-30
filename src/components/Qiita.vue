@@ -1,22 +1,30 @@
 <template>
   <div class="qiita">
+    <div class="jumbotron jumbotron-fluid bg-success text-white">
+      <div class="container">
+        <h1 class="display-4">Made in Qiita</h1>
+        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+      </div>
+    </div>
 
     <div class="p-3 mb-2 bg-light text-dark">
       <div class="v-margin25"></div>
 
-        <div class="mx-auto max-width-layout1400">
-          <div class="card text-left">
-            <div class="card-header bg-warning">Qiita </div>
-            <div class="card-body">
-              <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
-              <div class="v-margin25"></div>
-              <button @click="dbAdd" class="btn btn-warning">
-                <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
-                  <span class="sr-only">dbAdd...</span>
-                </div>
-                dbAdd
-              </button>
+        <div class="mx-auto max-width-layout1300">
+          <div v-show="debug">
+            <div class="card text-left">
+              <div class="card-header bg-warning">Qiita </div>
+              <div class="card-body">
+                <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
+                <div class="v-margin25"></div>
+                <button @click="dbAdd" class="btn btn-warning">
+                  <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+                    <span class="sr-only">dbAdd...</span>
+                  </div>
+                  dbAdd
+                </button>
 
+              </div>
             </div>
           </div>
           <div class="v-margin25"></div>
@@ -24,13 +32,18 @@
           <div class="row">
             <div v-for="(qiitaItem, key, index) in qiitaItems" :key="index" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
               <div class="card">
-                <div class="card-header">
-                  <!-- <img class="mr-3" src="https://picsum.photos/200" width="40px"> -->
-                  {{ qiitaItem.data().username }} {{ qiitaItem.data().create_date.seconds | toDate }}
-                </div>
+                <img :src="qiitaItem.data().image_url" class="card-img-top" alt="...">
+                <!-- <div class="card-header"> -->
+                  <!-- {{ qiitaItem.data().username }} {{ qiitaItem.data().create_date.seconds | toDate }} -->
+                <!-- </div> -->
                 <div class="card-body">
-                  <h5 class="card-title">{{ qiitaItem.data().qiita_url }}</h5>
-                  <p class="card-text">{{ qiitaItem.data().qiita_user }}</p>
+                  <h5 class="card-title"><a :href="qiitaItem.data().service_url">{{ qiitaItem.data().service_title }}</a></h5>
+                  <p class="card-text">
+                    <a :href="qiitaItem.data().qiita_url">{{ qiitaItem.data().qiita_title }}</a>
+                  </p>
+                  <p class="card-text">
+                    {{ qiitaItem.data().create_date.seconds | toDate }} {{ qiitaItem.data().qiita_user }} 
+                  </p>
                   <!-- <button @click="dbDelete(comment.id)" class="btn btn-danger">delete {{ comment.id }}</button> -->
                 </div>
               </div>
@@ -59,6 +72,7 @@ export default {
   },
   data () {
     return {
+      debug: false,
       qiitaItems: [],
       // field1: 'A',
       // text: '',
@@ -96,9 +110,6 @@ export default {
     // }
   },
   methods: {
-    debug () {
-      console.log('debug start');
-    },
     // dbRefer () {
     //   this.show = true;
     //   let dbRef = db.collection('qiita_items').orderBy("create_date", 'desc');
