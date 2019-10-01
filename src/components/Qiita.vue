@@ -31,19 +31,16 @@
 
           <div class="row">
             <div v-for="(qiitaItem, key, index) in qiitaItems" :key="index" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-              <div class="card shape-radius shadow">
+              <div class="card shape-radius">
                 <img :src="qiitaItem.data().image_url" class="card-img-top shape-radius-top" alt="...">
-                <!-- <div class="card-header"> -->
-                  <!-- {{ qiitaItem.data().username }} {{ qiitaItem.data().create_date.seconds | toDate }} -->
-                <!-- </div> -->
                 <div class="card-body">
-                  <h5 class="card-title"><a :href="qiitaItem.data().service_url">{{ qiitaItem.data().service_title }}</a></h5>
+                  <h4 class="card-title"><strong><a :href="qiitaItem.data().service_url">{{ qiitaItem.data().service_title }}</a></strong></h4>
                   <p class="card-text">
                     <a :href="qiitaItem.data().qiita_url">{{ qiitaItem.data().qiita_title }}</a>
                   </p>
                   <!-- <button @click="dbDelete(comment.id)" class="btn btn-danger">delete {{ comment.id }}</button> -->
                 </div>
-                <div class="card-footer">
+                <div class="card-footer shape-radius-bottom">
                   <small class="text-muted">
                     {{ qiitaItem.data().create_date.seconds | toDate }} {{ qiitaItem.data().qiita_user }} 
                   </small>
@@ -214,5 +211,16 @@ export default {
 }
 .shape-radius-top {
   border-radius: 30px 30px 0px 0px;
+}
+.shape-radius-bottom {
+  border-radius: 0px 0px 30px 30px;
+}
+.card {
+  box-shadow: 5px 5px 20px #dadada;
+  transition: .2s;
+}
+.card:hover {
+  box-shadow: none;
+  transform: translate3d(0, 5px, 0);
 }
 </style>
