@@ -34,6 +34,11 @@
               <div class="card shape-radius">
                 <img :src="qiitaItem.data().image_url" class="card-img-top shape-radius-top" alt="...">
                 <div class="card-body">
+                  <div class="text-right">
+                    <div v-for="(tag, kkey, iindex) in qiitaItem.data().tags" :key="iindex" class="text-right badge badge-pill badge-success">
+                      {{ tag }}
+                    </div>
+                  </div>
                   <h4 class="card-title"><strong><a :href="qiitaItem.data().service_url">{{ qiitaItem.data().service_title }}</a></strong></h4>
                   <p class="card-text">
                     <a :href="qiitaItem.data().qiita_url">{{ qiitaItem.data().qiita_title }}</a>
