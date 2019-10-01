@@ -12,7 +12,7 @@
 
         <div class="mx-auto max-width-layout1300">
           <div v-show="debug">
-            <div class="card text-left">
+            <div class="card shadow text-left">
               <div class="card-header bg-warning">Qiita </div>
               <div class="card-body">
                 <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
@@ -31,8 +31,8 @@
 
           <div class="row">
             <div v-for="(qiitaItem, key, index) in qiitaItems" :key="index" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-              <div class="card">
-                <img :src="qiitaItem.data().image_url" class="card-img-top" alt="...">
+              <div class="card shape-radius shadow">
+                <img :src="qiitaItem.data().image_url" class="card-img-top shape-radius-top" alt="...">
                 <!-- <div class="card-header"> -->
                   <!-- {{ qiitaItem.data().username }} {{ qiitaItem.data().create_date.seconds | toDate }} -->
                 <!-- </div> -->
@@ -41,10 +41,12 @@
                   <p class="card-text">
                     <a :href="qiitaItem.data().qiita_url">{{ qiitaItem.data().qiita_title }}</a>
                   </p>
-                  <p class="card-text">
-                    {{ qiitaItem.data().create_date.seconds | toDate }} {{ qiitaItem.data().qiita_user }} 
-                  </p>
                   <!-- <button @click="dbDelete(comment.id)" class="btn btn-danger">delete {{ comment.id }}</button> -->
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">
+                    {{ qiitaItem.data().create_date.seconds | toDate }} {{ qiitaItem.data().qiita_user }} 
+                  </small>
                 </div>
               </div>
               <div class="v-margin25"></div>
@@ -205,3 +207,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.shape-radius {
+  border-radius: 30px 30px 30px 30px;
+}
+.shape-radius-top {
+  border-radius: 30px 30px 0px 0px;
+}
+</style>
