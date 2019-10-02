@@ -29,6 +29,13 @@
           </div>
           <div class="v-margin25"></div>
 
+          username filter
+          <input v-model="user" placeholder="@jimpei, @yamuscle">
+          tag filter
+          <input v-model="tag" placeholder="php, vue">
+          <button @click="dbRefer" class="btn btn-warning">filter</button>
+          <div class="v-margin25"></div>
+
           <div class="row">
             <div v-for="(qiitaItem, key, index) in qiitaItems" :key="index" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
               <div class="card shape-radius">
@@ -78,12 +85,9 @@ export default {
     return {
       debug: false,
       qiitaItems: [],
-      // field1: 'A',
-      // text: '',
-      // createdAt: null,
-      // comments: [],
+      user: '',
+      tag: '',
       show: false,
-      // cnt: 3
     }
   },
   filters: {
@@ -94,7 +98,8 @@ export default {
     }
   },
   mounted() {
-    db.collection("qiita_items").orderBy("create_date", 'desc')
+    // yamuscle
+    db.collection("qiita_items")
     .onSnapshot(res => {
       console.log('mounted start');
       // console.log('cnt = ' + this.cnt);
@@ -114,27 +119,35 @@ export default {
     // }
   },
   methods: {
-    // dbRefer () {
-    //   this.show = true;
-    //   let dbRef = db.collection('qiita_items').orderBy("create_date", 'desc');
-    //   let allData = dbRef.get()
-    //     .then(snapshot => {
-    //       let array = [];
-    //       snapshot.forEach(doc => {
-    //         // console.log(doc.id, "=>", doc.data());
-    //         let tmpArray = doc;
-    //         array.push(tmpArray);
-    //       });
-    //       console.dir(array);
-    //       this.qiitaItems = array;
-    //       this.show = false;
-    //       // return array;
-    //     })
-    //     .catch(err => {
-    //       console.log("Error getting documents", err);
-    //       this.show = false;
-    //     });
-    // },
+    dbRefer () {
+      // orderBy("create_date", 'desc')
+      let dbRef;
+      if (this.user) {
+        dbRef = db.collection('qiita_items').where("qiita_user", "==", this.user);
+      } else {
+        dbRef = db.collection('qiita_items');
+      }
+      if (this.tag) {
+        dbRef = db.collection('qiita_items').where("tags", "array-contains", this.tag);
+      } else {
+        dbRef = db.collection('qiita_items');
+      }
+      let allData = dbRef.get()
+        .then(snapshot => {
+          let array = [];
+          snapshot.forEach(doc => {
+            // console.log(doc.id, "=>", doc.data());
+            let tmpArray = doc;
+            array.push(tmpArray);
+          });
+          console.dir(array);
+          this.qiitaItems = array;
+          // return array;
+        })
+        .catch(err => {
+          console.log("Error getting documents", err);
+        });
+    },
     dbAdd () {
       this.show = true;
       db.collection('qiita_items').doc('7effbab8fa65f398b731').set({
