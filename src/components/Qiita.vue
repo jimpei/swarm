@@ -16,6 +16,34 @@
               <div class="card-header bg-warning">Qiita </div>
               <div class="card-body">
                 <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
+                <p>qiita_url<input v-model="in_qiita_url" placeholder="https://"></p>
+                <p>qiita_id<input v-model="in_qiita_id" placeholder="https://"></p>
+                <p>qiita_title<input v-model="in_qiita_title" placeholder="qiitaのタイトル"></p>
+                <p>qiita_user<input v-model="in_qiita_user" placeholder="@jimpei"></p>
+                <p>service_title<input v-model="in_service_title" placeholder="サービス"></p>
+                <p>service_url<input v-model="in_service_url" placeholder="https//"></p>
+                <p>tags<input v-model="in_tags" placeholder="php, vue, firebase"></p>
+
+              <form>
+                <div class="form-group row">
+                  <div class="col-sm-8">
+                    <img v-show="imageFilePreview" class="preview-item-file" :src="imageFilePreview" alt="" width="60px"/>
+                  </div>
+                </div>
+                <div class="v-margin25"></div>
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" @change="onFileChange">
+                    <label class="custom-file-label" for="inputGroupFile04">{{ imageName }}</label>
+                  </div>
+                  <div class="input-group-append">
+                    <button class="btn btn-warning" type="button" id="inputGroupFileAddon04" @click="uploadImage">アイコン更新</button>
+                  </div>
+                </div>
+              </form>
+
+
+
                 <div class="v-margin25"></div>
                 <button @click="dbAdd" class="btn btn-warning">
                   <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
@@ -73,7 +101,7 @@
 
 <script>
 // @ is an alias to /src
-// import firebase from "firebase";
+import firebase from "firebase";
 // import store from "../store";
 import {db} from "../firebase";
 
@@ -87,7 +115,18 @@ export default {
       qiitaItems: [],
       user: '',
       tag: '',
+      in_qiita_id: '',
+      in_qiita_url: '',
+      in_qiita_title: '',
+      in_qiita_user: '',
+      in_service_title: '',
+      in_service_url: '',
+      in_tags: '',
       show: false,
+      imageName: '',
+      imageFile: '',
+      imageFilePreview: '',
+      downloadURL: '',
     }
   },
   filters: {
@@ -150,12 +189,25 @@ export default {
     },
     dbAdd () {
       this.show = true;
-      db.collection('qiita_items').doc('7effbab8fa65f398b731').set({
-        qiita_id: '7effbab8fa65f398b731',
-        qiita_title: 'JIRA APIを使用してチケットを作成する',
-        qiita_url: 'https://qiita.com/jimpei/items/7effbab8fa65f398b731',
-        qiita_user: '@jimpei',
-        service_title: 'hoge4',
+
+      console.log(this.in_qiita_url);
+      console.log(this.in_qiita_title);
+      console.log(this.in_qiita_user);
+      console.log(this.in_service_title);
+      console.log(this.in_service_url);
+      console.log(this.in_tags);
+      console.log(this.downloadURL);
+
+      this.show = false;
+      // return;
+      db.collection('qiita_items').doc(this.in_qiita_id).set({
+        qiita_id: this.in_qiita_id,
+        qiita_title: this.in_qiita_title,
+        qiita_url: this.in_qiita_url,
+        qiita_user: this.in_qiita_user,
+        service_url: this.in_service_url,
+        service_title: this.in_service_title,
+        image_url: this.downloadURL,
         tags : [
           "jira",
           "javascript"
@@ -218,6 +270,46 @@ export default {
         }
       }, 2000 );
 
+    },
+    onFileChange(e) {
+      // 画像フォームにファイルをセットしたら発火する
+      console.log('onFileChange start');
+      const files = e.target.files || e.dataTransfer.files;
+      this.imageFile = files[0];
+      this.convertImageToPreview(files[0]);
+      this.imageName = files[0].name;
+    },
+    convertImageToPreview(file) {
+      // 画像をプレビュー用に保存する
+      const reader = new FileReader();
+      reader.onload = e => {
+        this.imageFilePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    uploadImage() {
+      // 画像アップロードボタンメソッド
+      console.log('upload start');
+      console.log('image name : ' + this.imageName);
+      let uploadFileName = 'qiita/' + this.in_qiita_id + '_' + this.imageFile.name;
+      console.log('upload file name : ' + uploadFileName);
+
+      this.show = true;
+      const reader = new FileReader();
+      reader.onloadend = e => {
+        let blob = new Blob([e.target.result], { type: "image/jpeg" });
+        let storageRef = firebase.storage().ref(uploadFileName);
+        storageRef.put(blob).then(snapshot => {
+          // ユーザ情報にアイコンのURLをセットする
+          snapshot.ref.getDownloadURL().then(downloadURL => {
+            this.downloadURL = downloadURL;
+          });
+        });
+      }
+      reader.onerror = e => {
+          console.log("Failed file read: " + e.toString());
+      };
+      reader.readAsArrayBuffer(this.imageFile);
     }
   }
 };
