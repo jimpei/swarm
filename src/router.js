@@ -29,7 +29,7 @@ let router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: "/chat",
+      path: "/chat/:id",
       name: "chat",
       component: () => import("./views/ChatView.vue"),
       meta: { requiresAuth: true }

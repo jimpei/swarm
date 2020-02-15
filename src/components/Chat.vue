@@ -9,10 +9,71 @@
 
           <div class="col-md-4">
             <ul class="menu">
-                <li class="active"><a href="#"># PC質問部屋</a></li>
-                <li><a href="#"># 婚活部屋</a></li>
-                <li><a href="#"># お得情報</a></li>
-                <li><a href="#"># ジェットフォイル・フェリー運行情報</a></li>
+                <!-- <li>■ 知りたい！</li>
+                <li class="active">
+                <li><router-link to="/chat/0001" class="button--green"># イベント情報</router-link></li>
+                <li><router-link to="/chat/0002" class="button--green"># 災害情報</router-link></li>
+                <li><router-link to="/chat/0003" class="button--green"># 運行情報</router-link></li>
+                <li>■ 困っていること</li>
+                <li><a href="/chat/0004"># 健康について</a></li>
+                <li><a href="/chat/0005"># 仕事を探す</a></li>
+                <li><a href="/chat/0006"># 行政</a></li>
+                <li><a href="/chat/0007"># スマホ・パソコンについて</a></li>
+                <li>■ コミュニティ</li>
+                <li><a href="/chat/0008"># 釣り</a></li>
+                <li><a href="/chat/0009"># スポーツ</a></li>
+                <li><a href="/chat/0010"># グルメ・ランチ</a></li>
+                <li><a href="/chat/0011"># ゲーム</a></li>
+                <li><a href="/chat/0012"># 音楽</a></li>
+                <li><a href="/chat/0013"># ギャンブル</a></li>
+                <li>■ その他</li>
+                <li><a href="/chat/0014"># 婚活</a></li>
+                <li><a href="/chat/0015"># お得情報</a></li> -->
+
+
+                <li>■ 知りたい！</li>
+                <li class="active">
+                <li><a href="/chat/0001"># イベント情報</a></li>
+                <li><a href="/chat/0002"># 災害情報</a></li>
+                <li><a href="/chat/0003"># 今日のフェリー・ジェットフォイル・飛行機</a></li>
+                <li>■ 困っていること</li>
+                <li><a href="/chat/0004"># 健康について</a></li>
+                <li><a href="/chat/0005"># 仕事を探す</a></li>
+                <li><a href="/chat/0006"># 行政</a></li>
+                <li><a href="/chat/0007"># スマホ・パソコンについて</a></li>
+                <li>■ コミュニティ</li>
+                <li><a href="/chat/0008"># 釣り</a></li>
+                <li><a href="/chat/0009"># スポーツ</a></li>
+                <li><a href="/chat/0010"># グルメ・ランチ</a></li>
+                <li><a href="/chat/0011"># ゲーム</a></li>
+                <li><a href="/chat/0012"># 音楽</a></li>
+                <li><a href="/chat/0013"># ギャンブル</a></li>
+                <li>■ その他</li>
+                <li><a href="/chat/0014"># 婚活</a></li>
+                <li><a href="/chat/0015"># お得情報</a></li>
+
+                <!-- <li>■ 知りたい！</li>
+                <li class="active">
+                <li><a href="/chat?id=0001"># イベント情報</a></li>
+                <li><a href="/chat?id=0002"># 災害情報</a></li>
+                <li><a href="/chat?id=0003"># 今日のフェリー・ジェットフォイル・飛行機</a></li>
+                <li>■ 困っていること</li>
+                <li><a href="/chat?id=0004"># 健康について</a></li>
+                <li><a href="/chat?id=0005"># 仕事を探す</a></li>
+                <li><a href="/chat?id=0006"># 行政</a></li>
+                <li><a href="/chat?id=0007"># スマホ・パソコンについて</a></li>
+                <li>■ コミュニティ</li>
+                <li><a href="/chat?id=0008"># 釣り</a></li>
+                <li><a href="/chat?id=0009"># スポーツ</a></li>
+                <li><a href="/chat?id=0010"># グルメ・ランチ</a></li>
+                <li><a href="/chat?id=0011"># ゲーム</a></li>
+                <li><a href="/chat?id=0012"># 音楽</a></li>
+                <li><a href="/chat?id=0013"># ギャンブル</a></li>
+                <li>■ その他</li>
+                <li><a href="/chat?id=0014"># 婚活</a></li>
+                <li><a href="/chat?id=0015"># お得情報</a></li> -->
+
+
             </ul>
           </div>
 
@@ -23,13 +84,13 @@
               <div v-for="(comment, key, index) in comments" :key="index">
                 <div class="card">
                   <div class="card-header">
-                    <img class="mr-3" src="https://picsum.photos/200" width="40px">
+                    <!-- <img class="mr-3" src="https://picsum.photos/200" width="40px"> -->
                     {{ comment.data().username }} {{ comment.data().createdAt.seconds | toDate }}
                   </div>
                   <div class="card-body center">
                     <!-- <h5 class="card-title">{{ comment.data().field1 }}</h5> -->
                     <p class="card-text">{{ comment.data().text }}</p>
-                    <button @click="dbDelete(comment.id)" class="btn btn-danger">x</button>
+                    <!-- <button @click="dbDelete(comment.id)" class="btn btn-danger">x</button> -->
                   </div>
                 </div>
                 <div class="v-margin25"></div>
@@ -47,7 +108,7 @@
                         <div id="exampleFormControlTextarea1" class="long-text is-expanded">
                             <input v-model="text" class="input is-medium" type="text" placeholder="Message" />
                         </div>
-                        <button @click="dbAdd" class="btn btn-warning control control-submit">
+                        <button @click="dbAdd" class="btn btn-info control control-submit">
                           <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
                             <span class="sr-only">Loading...</span>
                           </div>
@@ -177,6 +238,7 @@ export default {
   },
   data () {
     return {
+      roomId: this.$route.params['id'],
       username: '',
       field1: 'A',
       text: '',
@@ -194,7 +256,14 @@ export default {
     }
   },
   mounted() {
-    db.collection("chat").doc("room1").collection('messages').orderBy("createdAt", 'desc')
+    // console.log(this.$route.query.id);
+    console.log(this.$route.params['id']);
+    // console.log(this.$route.params.id);
+    // this.roomId = this.$route.query.id;
+    // this.roomId = this.$route.params.id;
+    this.roomId = this.$route.params['id'];
+    // db.collection("chat").doc("room2").collection('messages').orderBy("createdAt", 'desc')
+    db.collection("chat").doc(this.roomId).collection('messages').orderBy("createdAt", 'desc')
     .onSnapshot(res => {
       console.log('mounted start');
       // console.log('cnt = ' + this.cnt);
@@ -239,8 +308,10 @@ export default {
     //     });
     // },
     dbAdd () {
+      // console.log(this.$route.query.id);
+      // console.log(this.$route.params['id']);
       this.show = true;
-      db.collection('chat').doc('room1').collection('messages').add({
+      db.collection('chat').doc(this.roomId).collection('messages').add({
         username: this.user.email,
         // field1: this.field1,
         field1: 'A',
@@ -260,7 +331,7 @@ export default {
     },
     dbDelete (id) {
       this.show = true;
-      db.collection('chat').doc('room1').collection('messages').doc(id).delete()
+      db.collection('chat').doc(this.roomId).collection('messages').doc(id).delete()
       .then(result => {
         console.log('db delete success');
         this.show = false;
@@ -273,7 +344,7 @@ export default {
       // console.log('debug cnt' + this.cnt);
 
       this.show = true;
-      let dbRef = db.collection('chat').doc('room1').collection('messages').orderBy("createdAt", 'desc').limit(this.cnt);
+      let dbRef = db.collection('chat').doc(this.roomId).collection('messages').orderBy("createdAt", 'desc').limit(this.cnt);
       let allData = dbRef.get()
         .then(snapshot => {
           let array = [];

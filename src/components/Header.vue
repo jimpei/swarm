@@ -1,8 +1,9 @@
 <template>
   <div class="common-header">
-    <nav class="navbar navbar-light bg-warning">
+    <nav class="navbar navbar-light bg-info">
       <div class="mx-auto" style="width: 200px;">
-        <router-link to="/"><img alt="Vue logo" class="logo" src="../assets/swarm_logo.png" width="50%"/></router-link>
+        <!-- <router-link to="/"><img alt="Vue logo" class="logo" src="../assets/swarm_logo.png" width="50%"/></router-link> -->
+        <router-link to="/"><img alt="Vue logo" class="logo" src="../assets/komasuke-logo2.png" width="70%"/></router-link>
       </div>
       <div v-if="user.email">
         <div v-if="user.photoURL"><img class="mr-3" :src="user.photoURL" width="40px"></div>
@@ -15,7 +16,7 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <router-link class="dropdown-item" to="/activity">Activity</router-link>
             <router-link class="dropdown-item" to="/profile">Profile</router-link>
-            <router-link class="dropdown-item" to="/chat">Chat</router-link>
+            <router-link class="dropdown-item" to="/chat/0001">Chat</router-link>
             <router-link class="dropdown-item" to="/geo">Geo</router-link>
             <router-link class="dropdown-item" to="/qiita">Qiita</router-link>
             <router-link class="dropdown-item" to="/scroll">MUGEN Scroll Test</router-link>
