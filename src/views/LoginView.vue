@@ -86,7 +86,7 @@ export default {
           // alert('mailSignIn Success! redirect to top page.');
           this.show = false;
           console.log('[signIn] mailSignIn Success! redirect to top page.');
-          this.$router.push('/activity');
+          this.$router.push('/chat/0001');
         },
         err => {
           alert(err.message);

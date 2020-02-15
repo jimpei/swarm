@@ -80,7 +80,7 @@ router.beforeEach((to, from, next) => {
     // console.log(store.getters.user.email);
     if (store.getters.user.email) {
       console.log("[router] already login");
-      next("/activity");
+      next("/chat/0001");
       return;
     }
   }

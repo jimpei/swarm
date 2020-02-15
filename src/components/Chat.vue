@@ -82,7 +82,7 @@
 
               <!-- メッセージデータ -->
               <div v-for="(comment, key, index) in comments" :key="index">
-                <div class="card">
+                <div class="card" v-bind:class="{'mymessageRight' : isMyMessage(comment.data().username) }">
                   <div class="card-header">
                     <!-- <img class="mr-3" src="https://picsum.photos/200" width="40px"> -->
                     <div v-if=" comment.data().field1 == 'B'">{{ comment.data().username }} </div>
@@ -94,6 +94,7 @@
                     <p class="card-text">{{ comment.data().text }}</p>
                     <!-- <button @click="dbDelete(comment.id)" class="btn btn-danger">x</button> -->
                   </div>
+                  <div class="right"><button type="button" class="btn btn-outline-info smallmessage btn-sm">イイね！</button></div>
                 </div>
                 <div class="v-margin25"></div>
               </div>
@@ -116,7 +117,10 @@
                         </label>
                     </div>
                     <div id="exampleFormControlTextarea1" class="long-text is-expanded">
-                        <input v-model="text" class="input is-medium" type="text" placeholder="Message" />
+                      <!-- {{user()}} -->
+                      
+                      <div v-if="user.uid"><input v-model="text" class="input is-medium" type="text" placeholder="Message" /></div>
+                      <div v-else><input v-model="text" class="input is-medium" type="text" placeholder="false" /></div>
                     </div>
                     <button @click="dbAdd" class="btn btn-info control control-submit">
                       <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
@@ -297,6 +301,13 @@ footer .field{
     text-align: right;
 }
 
+.right {
+    text-align: right;
+}
+.smallmessage {
+    font-size: 4px;
+    margin: 4px;
+}
 .menu li {
   display: list-item;  /* 縦に並べる */
   list-style-type: none;
@@ -319,8 +330,13 @@ footer .field{
 // @ is an alias to /src
 // import firebase from "firebase";
 import store from "../store";
+import common from "../common";
+import Footer from "@/components/Footer.vue";
+import Header from "@/components/Header.vue";
 import {db} from "../firebase";
 import InfiniteLoading from 'vue-infinite-loading';
+import "@firebase/auth";
+import "@firebase/storage";
 
 export default {
   name: "chat",
@@ -371,12 +387,24 @@ export default {
   },
   computed: {
     user() {
+      console.log("call computed");
+      // console.log(this.$store.getters.is);
       return this.$store.getters.user;
     }
   },
   methods: {
     doLogout () {
       common.logout();
+    },
+    isMyMessage: function(message){
+
+console.log(message)
+        // if (this.userId == message.userId) {
+        //   console.log("同じ！")
+        // } else {
+        //   console.log("同じじゃない！")
+        // }
+        return true;
     },
     // dbRefer () {
     //   this.show = true;

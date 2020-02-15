@@ -73,7 +73,7 @@ export default {
           let url = await this.getRandomImageUrl();
           await this.updatePhotoURL(url)
           this.show = false;
-          this.$router.push('/activity');
+          this.$router.push('/chat/0001');
         })
         .catch(error => {
           alert(error.message)
