@@ -5,79 +5,163 @@
       <div class="v-margin25"></div>
 
       <div class="container">
+        <div class="row">
 
-        <div class="mx-auto max-width-layout">
-          <div class="card text-left">
-            <div class="card-header bg-warning">chat {{ user.uid }} </div>
+          <div class="col-md-4">
+            <ul class="menu">
+                <li class="active"><a href="#"># PC質問部屋</a></li>
+                <li><a href="#"># 婚活部屋</a></li>
+                <li><a href="#"># お得情報</a></li>
+                <li><a href="#"># ジェットフォイル・フェリー運行情報</a></li>
+            </ul>
+          </div>
 
-            <div class="card-body">
-              <h4 class="card-title text-left text-warning">hogeeeeeee</h4>
+          <div class="col-md-8">
+            <div class="mx-auto max-width-layout">
 
-              <div class="media">
-                <div v-if="user.photoURL"><img class="mr-3" :src="user.photoURL" width="40px"></div>
-                <!-- <div v-else><img class="mr-3" src="../assets/fantasy_game_character_slime.png" width="40px"></div> -->
-                <div v-else><img class="mr-3" src="https://picsum.photos/200" width="40px"></div>
-                <div class="media-body">
-                  <h5 class="mt-0">{{ user.email }}</h5>
-                  user display name => {{ user.displayName }}
-                </div>
-              </div>
-              <div class="v-margin25"></div>
-              <form>
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Example select</label>
-                  <select class="form-control" id="exampleFormControlSelect1" v-model="field1">
-                    <option>A</option>
-                    <option>B</option>
-                    <option>C</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Example textarea</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="text"></textarea>
+              <!-- メッセージデータ -->
+              <div v-for="(comment, key, index) in comments" :key="index">
+                <div class="card">
+                  <div class="card-header">
+                    <img class="mr-3" src="https://picsum.photos/200" width="40px">
+                    {{ comment.data().username }} {{ comment.data().createdAt.seconds | toDate }}
+                  </div>
+                  <div class="card-body center">
+                    <!-- <h5 class="card-title">{{ comment.data().field1 }}</h5> -->
+                    <p class="card-text">{{ comment.data().text }}</p>
+                    <button @click="dbDelete(comment.id)" class="btn btn-danger">x</button>
+                  </div>
                 </div>
                 <div class="v-margin25"></div>
-                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-              </form>
-                <button @click="dbAdd" class="btn btn-warning">
-                  <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                  db add
-                </button>
+              </div>
+              <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
 
-              <div class="v-margin25"></div>
-              <!-- <button @click="debug" class="btn btn-info">debug</button> -->
+              <!-- 投稿フォーム -->
+
+              <!-- ここまでがフォーム -->
+
               <!-- <div class="v-margin25"></div> -->
+                <footer>
+                    <div class="field is-grouped">
+                        <!-- <input id="exampleFormControlTextarea1" v-model="text" class="input is-medium" type="text" placeholder="Message"/> -->
+                        <div id="exampleFormControlTextarea1" class="long-text is-expanded">
+                            <input v-model="text" class="input is-medium" type="text" placeholder="Message" />
+                        </div>
+                        <button @click="dbAdd" class="btn btn-warning control control-submit">
+                          <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        投稿する
+                        </button>
+                    </div>
+                </footer>
+
             </div>
           </div>
-          <div class="v-margin25"></div>
-
-          <div v-for="(comment, key, index) in comments" :key="index">
-            <div class="card">
-              <div class="card-header">
-                <img class="mr-3" src="https://picsum.photos/200" width="40px">
-                {{ comment.data().username }} {{ comment.data().createdAt.seconds | toDate }}
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">{{ comment.data().field1 }}</h5>
-                <p class="card-text">{{ comment.data().text }}</p>
-                <button @click="dbDelete(comment.id)" class="btn btn-danger">delete {{ comment.id }}</button>
-              </div>
-            </div>
-            <div class="v-margin25"></div>
-          </div>
-          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-
         </div>
 
       </div>
 
       <div class="v-margin25"></div>
     </div>
+    
 
   </div>
 </template>
+
+<style scoped>
+.long-text {
+   width: 550px;
+}
+
+header{
+    position:fixed;
+    width:100%;
+    background:#00d1b2;
+    z-index:2;
+    height:55px;
+}
+
+#app header h1{
+    padding-left:10px;
+    padding-top:8px;
+    color:#ffffff;
+}
+
+.chaturl{
+    padding-left:10px;
+}
+
+.chaturl a{
+    color:#ffffff;
+    font-size:14px;
+}
+
+.chaturl a:hover{
+    text-decoration: underline;
+}
+
+footer{
+    position:fixed;
+    bottom:0px;
+    width:100%;
+    height:66px;
+    border-top:1px solid #aaaaaa;
+    background:#ffffff;
+}
+
+footer .field{
+    padding:10px;
+}
+
+.button-submit{
+    height:45px;
+    line-height:1.0;
+    width:100%;
+}
+
+.control-submit{
+    width:20%;
+}
+
+#message-contents{
+    z-index:1;
+    padding: 55px 10px 76px 10px;
+    background:#ffffff;
+}
+
+.message-wrapper{
+    margin:20px 10px;
+}
+
+.message-wrapper .box{
+    float:left;
+}
+.message-wrapper .box.mymessage{
+    float:right;
+}
+
+.mymessage p{
+    text-align: right;
+}
+
+.menu li {
+  display: list-item;  /* 縦に並べる */
+  list-style-type: none;
+  text-transform: uppercase;
+  padding: 0.5em;
+  text-align: left;
+  /* background: #; */
+}
+.footer {
+    position:fixed;
+    bottom:0px;
+    width:100%;
+    height:66px;
+    border-top:1px solid #aaaaaa;
+    background:#ffffff;
+}
+</style>
 
 <script>
 // @ is an alias to /src
@@ -158,7 +242,8 @@ export default {
       this.show = true;
       db.collection('chat').doc('room1').collection('messages').add({
         username: this.user.email,
-        field1: this.field1,
+        // field1: this.field1,
+        field1: 'A',
         text: this.text,
         createdAt: new Date()
       }).then(result => {

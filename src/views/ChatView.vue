@@ -2,7 +2,7 @@
   <div class="login">
     <Header msg="Welcome to Your Vue.js App" />
     <Chat msg="Welcome to Your Vue.js App" />
-    <Footer msg="Welcome to Your Vue.js App" />
+    <!-- <Footer msg="Welcome to Your Vue.js App" /> -->
   </div>
 </template>
 
