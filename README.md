@@ -1,4 +1,3 @@
-
 # swarm test
 
 ## Project setup
