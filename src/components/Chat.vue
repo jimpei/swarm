@@ -85,7 +85,9 @@
                 <div class="card">
                   <div class="card-header">
                     <!-- <img class="mr-3" src="https://picsum.photos/200" width="40px"> -->
-                    {{ comment.data().username }} {{ comment.data().createdAt.seconds | toDate }}
+                    <div v-if=" comment.data().field1 == 'B'">{{ comment.data().username }} </div>
+                    <div v-else>**** </div>
+                    {{ comment.data().createdAt.seconds | toDate }}
                   </div>
                   <div class="card-body center">
                     <!-- <h5 class="card-title">{{ comment.data().field1 }}</h5> -->
@@ -102,20 +104,28 @@
               <!-- ここまでがフォーム -->
 
               <!-- <div class="v-margin25"></div> -->
-                <footer>
-                    <div class="field is-grouped">
-                        <!-- <input id="exampleFormControlTextarea1" v-model="text" class="input is-medium" type="text" placeholder="Message"/> -->
-                        <div id="exampleFormControlTextarea1" class="long-text is-expanded">
-                            <input v-model="text" class="input is-medium" type="text" placeholder="Message" />
-                        </div>
-                        <button @click="dbAdd" class="btn btn-info control control-submit">
-                          <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
-                            <span class="sr-only">Loading...</span>
-                          </div>
-                        投稿する
-                        </button>
+              <footer>
+                <div class="field is-grouped">
+                    <!-- <input id="exampleFormControlTextarea1" v-model="text" class="input is-medium" type="text" placeholder="Message"/> -->
+
+                    <div class="switch">
+                        <input type="checkbox" name="switch" class="switch-checkbox" id="myswitch" v-model="isTokumei">
+                        <label class="switch-label" for="myswitch">
+                            <span class="switch-inner"></span>
+                            <span class="switch-switch"></span>
+                        </label>
                     </div>
-                </footer>
+                    <div id="exampleFormControlTextarea1" class="long-text is-expanded">
+                        <input v-model="text" class="input is-medium" type="text" placeholder="Message" />
+                    </div>
+                    <button @click="dbAdd" class="btn btn-info control control-submit">
+                      <div v-if="show" class="spinner-border spinner-border-sm text-light" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    投稿する
+                    </button>
+                </div>
+              </footer>
 
             </div>
           </div>
@@ -125,12 +135,93 @@
 
       <div class="v-margin25"></div>
     </div>
-    
+
 
   </div>
 </template>
 
 <style scoped>
+.switch {
+    position: relative;
+    width: 110px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.switch-checkbox {
+    display: none;
+}
+.switch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    width: 110px;
+    height: 32px;
+    border-radius: 50px;
+    background-color: #ebeeef;
+    transition: background-color 0.4s ease;
+}
+ 
+.switch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.switch-inner:before,
+.switch-inner:after {
+    display: block;
+    float: left;
+    width: 50%;
+    height: 30px;
+    padding: 0;
+    line-height: 30px;
+    color: #fff;
+    box-sizing: border-box;
+}
+.switch-inner:before {
+    content: "匿名";
+    padding-right: 10px;
+    background-color: #66cdaa;
+    color: #f5f5f5;
+    font-weight: bold;
+    text-align: center;
+}
+.switch-inner:after {
+    content: "off";
+    padding-left: 10px;
+    background-color: #f5f5f5;
+    color: #999;
+    text-align: center;
+}
+.switch-switch {
+    display: block;
+    width: 26px;
+    height: 26px;
+    margin: 2px;
+    background-color: #eee;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 89px;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0,0,0,0.4);
+    transition: all 0.3s ease-in,
+        background-color 0.3s ease;
+}
+.switch-checkbox:checked + .switch-label .switch-inner {
+    margin-left: 0;
+}
+.switch-checkbox:checked + .switch-label .switch-switch {
+    right: 0;
+    background-color: #f5f5f5;
+}
+
+
 .long-text {
    width: 550px;
 }
@@ -182,7 +273,7 @@ footer .field{
 }
 
 .control-submit{
-    width:20%;
+    width:10%;
 }
 
 #message-contents{
@@ -238,6 +329,7 @@ export default {
   },
   data () {
     return {
+      isTokumei: false,
       roomId: this.$route.params['id'],
       username: '',
       field1: 'A',
@@ -311,10 +403,18 @@ export default {
       // console.log(this.$route.query.id);
       // console.log(this.$route.params['id']);
       this.show = true;
+
+      let messageType;
+      if (this.isTokumei) {
+        messageType = 'A';
+      } else {
+        messageType = 'B';
+      }
+
       db.collection('chat').doc(this.roomId).collection('messages').add({
         username: this.user.email,
         // field1: this.field1,
-        field1: 'A',
+        field1: messageType,
         text: this.text,
         createdAt: new Date()
       }).then(result => {
